@@ -47,6 +47,7 @@ public class Puzzle {
                 int remove = getRandomNumber(0,2);
                 if (remove==0 && k<level1){
                     isGiven[row][col] = false;
+                    k = k+1;
                 }
                 else {isGiven[row][col]=true;}
             }
