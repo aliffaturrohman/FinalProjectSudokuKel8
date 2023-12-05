@@ -11,7 +11,7 @@ public class SudokuFrame extends JFrame {
          JMenu newGame = new JMenu("New Game");
          JMenuItem sixBySixGame = new JMenuItem("6 By 6 Game");
          JMenuItem nineByNineGame = new JMenuItem("9 By 9 Game");
-
+         
 
          file.add(newGame);
          menuBar.add(file);

@@ -39,7 +39,7 @@ public class Puzzle {
         // Need to use input parameter cellsToGuess!
         // Hardcoded for testing, only 2 cells of "8" is NOT GIVEN
 
-        int level1 = getRandomNumber(28,30);
+        int level1 = getRandomNumber(5,10);
         int k =0;
         // Copy from hardcodedIsGiven into array "isGiven"
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
