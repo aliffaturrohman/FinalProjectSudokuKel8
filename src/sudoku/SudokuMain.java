@@ -35,7 +35,7 @@ public class SudokuMain extends JFrame {
         board.newGame();
 
         pack();     // Pack the UI components, instead of using setSize()
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // to handle window-closing
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);  // to handle window-closing
         setTitle("Sudoku");
         setVisible(true);
     }
