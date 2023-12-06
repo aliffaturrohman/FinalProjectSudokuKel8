@@ -2,6 +2,8 @@ package sudoku;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+
 
 public class Cell extends JTextField{
     //cell class untuk membuat model kolom sudoku
@@ -13,7 +15,7 @@ public class Cell extends JTextField{
     public static final Color BG_TO_GUESS = Color.yellow;
     public static final Color BG_CORRECT_GUESS = new Color(0,216,0);
     public static final Color BG_WRONG_GUESS = new Color(216,0,0);
-    public static final Font FONT_NUMBERS = new Font("OCR A Extended", Font.PLAIN, 28);
+    public static final Font FONT_NUMBERS = new Font("Comic Sans MS", Font.PLAIN, 28);
 
     int row, col;
     int number;
@@ -38,6 +40,7 @@ public class Cell extends JTextField{
 
     /** This Cell (JTextField) paints itself based on its status */
     public void paint() {
+        super.setBorder(new LineBorder(Color.lightGray,1));
         if (status == CellStatus.GIVEN) {
             // Inherited from JTextField: Set display properties
             super.setText(number + "");
