@@ -5,8 +5,8 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                    SudokuFrame sudokuFrame = new SudokuFrame();
-                    sudokuFrame.setVisible(true);
+                    SudokuMenuBar sudokuMenuBar = new SudokuMenuBar();
+                    sudokuMenuBar.setVisible(true);
             }
         });
     }
