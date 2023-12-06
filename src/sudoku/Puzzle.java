@@ -45,7 +45,7 @@ public class Puzzle {
                 int rowfalselimit = 0;
                 for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
                     int remove = getRandomNumber(0,3);
-                    if (remove == 0 && falselimit < level1 && rowfalselimit < 7) {
+                    if (remove == 0 && falselimit < level1 && rowfalselimit < 6) {
                         isGiven[row][col] = false;
                         falselimit = falselimit + 1;
                         rowfalselimit = rowfalselimit + 1;
