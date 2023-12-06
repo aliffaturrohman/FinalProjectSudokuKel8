@@ -1,4 +1,8 @@
+import sudoku.SudokuMain;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 public class SudokuMenuBar extends JFrame {
     public SudokuMenuBar(){
@@ -16,8 +20,19 @@ public class SudokuMenuBar extends JFrame {
         newGame.add(sixBySixGame);
         newGame.add(nineByNineGame);
 
+        nineByNineGame.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        new SudokuMain();
+                    }
+                });
+            }
+        });
+
         file.add(newGame);
         menuBar.add(file);
         this.setJMenuBar(menuBar);
+
     }
 }
