@@ -1,4 +1,5 @@
 import sudoku.SudokuMain;
+import tictactoe.TTTGraphics;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,6 +26,15 @@ public class SudokuMenuBar extends JFrame {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         new SudokuMain();
+                    }
+                });
+            }
+        });
+        sixBySixGame.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        new TTTGraphics();
                     }
                 });
             }
