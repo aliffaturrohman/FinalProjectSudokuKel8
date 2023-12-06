@@ -16,7 +16,7 @@ public class Puzzle {
     //  to control the difficulty level.
     // This method shall set (or update) the arrays numbers and isGiven
 
-    public void newPuzzle(int cellsToGuess) {
+    public void newPuzzle() {
         // I hardcode a puzzle here for illustration and testing.
         int[][] hardcodedNumbers =
                 {{5, 3, 4, 6, 7, 8, 9, 1, 2},
@@ -39,19 +39,21 @@ public class Puzzle {
         // Need to use input parameter cellsToGuess!
         // Hardcoded for testing, only 2 cells of "8" is NOT GIVEN
 
-        int level1 = getRandomNumber(25,30);
-        int k =0;
-        // Copy from hardcodedIsGiven into array "isGiven"
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                int remove = getRandomNumber(0,3);
-                if (remove==0 && k<level1){
-                    isGiven[row][col] = false;
-                    k = k+1;
+        int level1 = getRandomNumber(35,40);
+        int falselimit = 0;
+            for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+                int rowfalselimit = 0;
+                for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                    int remove = getRandomNumber(0,3);
+                    if (remove == 0 && falselimit < level1 && rowfalselimit < 6) {
+                        isGiven[row][col] = false;
+                        falselimit = falselimit + 1;
+                        rowfalselimit = rowfalselimit + 1;
+                    } else {
+                        isGiven[row][col] = true;
+                    }
                 }
-                else {isGiven[row][col]=true;}
             }
-        }
     }
     public int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
