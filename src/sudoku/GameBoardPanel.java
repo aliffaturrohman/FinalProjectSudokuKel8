@@ -5,6 +5,8 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 public class GameBoardPanel extends JPanel {
+    public static final int GRID_SIZE = 9;
+    public static final int SUBGRID_SIZE = 3;
     private static final long serialVersionUID = 1L;  // to prevent serial warning
 
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -12,23 +14,23 @@ public class GameBoardPanel extends JPanel {
     int screenWidth = screenSize.width;
     // Define named constants for UI sizes
     public static int CELL_SIZE = screenHeight/12;   // Cell width/height in pixels
-    public static int BOARD_WIDTH  = CELL_SIZE * SudokuConstants.GRID_SIZE;
-    public static final int BOARD_HEIGHT = CELL_SIZE * SudokuConstants.GRID_SIZE;
+    public static int BOARD_WIDTH  = CELL_SIZE * GRID_SIZE;
+    public static final int BOARD_HEIGHT = CELL_SIZE * GRID_SIZE;
     // Board width/height in pixels
 
     // Define properties
     /** The game board composes of 9x9 Cells (customized JTextFields) */
-    private Cell[][] cells = new Cell[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
+    private Cell[][] cells = new Cell[GRID_SIZE][GRID_SIZE];
     /** It also contains a Puzzle with array numbers and isGiven */
     private Puzzle puzzle = new Puzzle();
 
     /** Constructor */
     public GameBoardPanel() {
 
-        super.setLayout(new GridLayout(SudokuConstants.GRID_SIZE, SudokuConstants.GRID_SIZE));  // JPanel
+        super.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));  // JPanel
         // Allocate the 2D array of Cell, and added into JPanel.
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+        for (int row = 0; row < GRID_SIZE; ++row) {
+            for (int col = 0; col < GRID_SIZE; ++col) {
                 cells[row][col] = new Cell(row, col);
                 super.add(cells[row][col]);   // JPanel
             }
@@ -40,8 +42,8 @@ public class GameBoardPanel extends JPanel {
 
 
         // [TODO 4] Adds this common listener to all editable cells
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+        for (int row = 0; row < GRID_SIZE; ++row) {
+            for (int col = 0; col < GRID_SIZE; ++col) {
                 if (cells[row][col].isEditable()) {
                     cells[row][col].addActionListener(listener);   // For all editable rows and cols
                 }
@@ -60,8 +62,8 @@ public class GameBoardPanel extends JPanel {
         puzzle.newPuzzle();
 
         // Initialize all the 9x9 cells, based on the puzzle.
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+        for (int row = 0; row < GRID_SIZE; ++row) {
+            for (int col = 0; col < GRID_SIZE; ++col) {
                 cells[row][col].newGame(puzzle.numbers[row][col], puzzle.isGiven[row][col]);
             }
         }
@@ -72,9 +74,9 @@ public class GameBoardPanel extends JPanel {
      * i.e., none of the cell have status of TO_GUESS or WRONG_GUESS
      */
     public boolean isSolved() {
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                if (cells[row][col].status == CellStatus.TO_GUESS || cells[row][col].status == CellStatus.WRONG_GUESS) {
+        for (int row = 0; row < GRID_SIZE; ++row) {
+            for (int col = 0; col < GRID_SIZE; ++col) {
+                if (cells[row][col].status == false) {
                     return false;
                 }
             }
@@ -100,13 +102,13 @@ private class CellInputListener implements ActionListener {
          * Update the cell status sourceCell.status,
          * and re-paint the cell via sourceCell.paint().
          */
+        // re-paint this cell based on its status
         if (numberIn == sourceCell.number) {
-           sourceCell.status = CellStatus.CORRECT_GUESS;
+           sourceCell.status = true;
+           sourceCell.painttrue();
         } else {
-           sourceCell.status = CellStatus.WRONG_GUESS;
+           sourceCell.paintfalse();
         }
-        sourceCell.paint();   // re-paint this cell based on its status
-
         /*
          * [TODO 6] (later)
          * Check if the player has solved the puzzle after this move,
