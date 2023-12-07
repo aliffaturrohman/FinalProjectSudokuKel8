@@ -6,7 +6,6 @@ import javax.swing.border.LineBorder;
 
 public class GameBoardPanel extends JPanel {
     public static final int GRID_SIZE = 9;
-    public static final int SUBGRID_SIZE = 3;
     private int score=0;
     private static final long serialVersionUID = 1L;  // to prevent serial warning
 
@@ -119,6 +118,13 @@ private class CellInputListener implements ActionListener {
         if(isSolved()){
         JOptionPane.showMessageDialog(null, "congratulation");
     }
+    }
+}
+public void solve(){
+    for (int row = 0; row < GRID_SIZE; ++row) {
+        for (int col = 0; col < GRID_SIZE; ++col) {
+            cells[row][col].newGame(puzzle.numbers[row][col], true);
+        }
     }
 }
 public int getScore(){
