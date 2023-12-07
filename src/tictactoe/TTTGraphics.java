@@ -1,8 +1,10 @@
 package tictactoe;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
 /**
  * Tic-Tac-Toe: Two-player Graphics version with Simple-OO in one class
  */
@@ -25,10 +27,14 @@ public class TTTGraphics extends JFrame {
     public static final int SYMBOL_STROKE_WIDTH = 8; // pen's stroke width
     public static final Color COLOR_BG = Color.WHITE;  // background
     public static final Color COLOR_BG_STATUS = new Color(216, 216, 216);
-    public static final Color COLOR_GRID   = Color.LIGHT_GRAY;  // grid lines
+    public static final Color COLOR_GRID   = new Color(34, 152, 23);  // grid lines
     public static final Color COLOR_CROSS  = new Color(211, 45, 65);  // Red #D32D41
     public static final Color COLOR_NOUGHT = new Color(76, 181, 245); // Blue #4CB5F5
     public static final Font FONT_STATUS = new Font("OCR A Extended", Font.PLAIN, 14);
+
+
+
+
 
     // This enum (inner class) contains the various states of the game
     public enum State {
@@ -165,11 +171,24 @@ public class TTTGraphics extends JFrame {
     class GamePanel extends JPanel {
         private static final long serialVersionUID = 1L; // to prevent serializable warning
 
+        private String X_IMAGE_URL = "harimau.png";
+        private String O_IMAGE_URL = "monyet.png";
+        private String BACKGROUND_IMAGE_URL = "harimau.png";
+
         @Override
         public void paintComponent(Graphics g) {  // Callback via repaint()
             super.paintComponent(g);
-            setBackground(COLOR_BG);  // set its background color
+//            setBackground(COLOR_BG);  // set its background color
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            Image X_IMAGE = toolkit.getImage(X_IMAGE_URL);
+            Image O_IMAGE = toolkit.getImage(O_IMAGE_URL);
+            Image BACKGROUND_IMAGE = toolkit.getImage(BACKGROUND_IMAGE_URL);
 
+            setBackground(Color.WHITE);  // set its background color
+            // Draw the background image
+            g.drawImage(BACKGROUND_IMAGE, 0, 0, BOARD_WIDTH, BOARD_HEIGHT, null);
+            // Draw the grid lines
+            g.setColor(COLOR_GRID);
             // Draw the grid lines
             g.setColor(COLOR_GRID);
             for (int row = 1; row < ROWS; ++row) {
@@ -190,15 +209,10 @@ public class TTTGraphics extends JFrame {
                 for (int col = 0; col < COLS; ++col) {
                     int x1 = col * CELL_SIZE + CELL_PADDING;
                     int y1 = row * CELL_SIZE + CELL_PADDING;
-                    if (board[row][col] == Seed.CROSS) {  // draw a 2-line cross
-                        g2d.setColor(COLOR_CROSS);
-                        int x2 = (col + 1) * CELL_SIZE - CELL_PADDING;
-                        int y2 = (row + 1) * CELL_SIZE - CELL_PADDING;
-                        g2d.drawLine(x1, y1, x2, y2);
-                        g2d.drawLine(x2, y1, x1, y2);
-                    } else if (board[row][col] == Seed.NOUGHT) {  // draw a circle
-                        g2d.setColor(COLOR_NOUGHT);
-                        g2d.drawOval(x1, y1, SYMBOL_SIZE, SYMBOL_SIZE);
+                    if (board[row][col] == Seed.CROSS) {
+                        g2d.drawImage(X_IMAGE, x1, y1, SYMBOL_SIZE, SYMBOL_SIZE, null);
+                    } else if (board[row][col] == Seed.NOUGHT) {
+                        g2d.drawImage(O_IMAGE, x1, y1, SYMBOL_SIZE, SYMBOL_SIZE, null);
                     }
                 }
             }
@@ -206,16 +220,16 @@ public class TTTGraphics extends JFrame {
             // Print status message
             if (currentState == State.PLAYING) {
                 statusBar.setForeground(Color.BLACK);
-                statusBar.setText((currentPlayer == Seed.CROSS) ? "X's Turn" : "O's Turn");
+                statusBar.setText((currentPlayer == Seed.CROSS) ? "Tiger's Turn" : "Monkey's Turn");
             } else if (currentState == State.DRAW) {
                 statusBar.setForeground(Color.RED);
                 statusBar.setText("It's a Draw! Click to play again");
             } else if (currentState == State.CROSS_WON) {
                 statusBar.setForeground(Color.RED);
-                statusBar.setText("'X' Won! Click to play again");
+                statusBar.setText("'Tiger' Won! Click to play again");
             } else if (currentState == State.NOUGHT_WON) {
                 statusBar.setForeground(Color.RED);
-                statusBar.setText("'O' Won! Click to play again");
+                statusBar.setText("'Monkey' Won! Click to play again");
             }
         }
     }

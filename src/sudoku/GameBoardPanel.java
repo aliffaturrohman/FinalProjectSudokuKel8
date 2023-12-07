@@ -2,13 +2,17 @@ package sudoku;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 public class GameBoardPanel extends JPanel {
     private static final long serialVersionUID = 1L;  // to prevent serial warning
 
+    static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    static int screenHeight = screenSize.height;
+    int screenWidth = screenSize.width;
     // Define named constants for UI sizes
-    public static final int CELL_SIZE = 60;   // Cell width/height in pixels
-    public static final int BOARD_WIDTH  = CELL_SIZE * SudokuConstants.GRID_SIZE;
+    public static int CELL_SIZE = screenHeight/12;   // Cell width/height in pixels
+    public static int BOARD_WIDTH  = CELL_SIZE * SudokuConstants.GRID_SIZE;
     public static final int BOARD_HEIGHT = CELL_SIZE * SudokuConstants.GRID_SIZE;
     // Board width/height in pixels
 
@@ -20,8 +24,8 @@ public class GameBoardPanel extends JPanel {
 
     /** Constructor */
     public GameBoardPanel() {
-        super.setLayout(new GridLayout(SudokuConstants.GRID_SIZE, SudokuConstants.GRID_SIZE));  // JPanel
 
+        super.setLayout(new GridLayout(SudokuConstants.GRID_SIZE, SudokuConstants.GRID_SIZE));  // JPanel
         // Allocate the 2D array of Cell, and added into JPanel.
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
@@ -53,7 +57,7 @@ public class GameBoardPanel extends JPanel {
      */
     public void newGame() {
         // Generate a new puzzle
-        puzzle.newPuzzle(2);
+        puzzle.newPuzzle();
 
         // Initialize all the 9x9 cells, based on the puzzle.
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
