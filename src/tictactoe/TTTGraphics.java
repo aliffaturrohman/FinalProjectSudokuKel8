@@ -173,7 +173,7 @@ public class TTTGraphics extends JFrame {
 
         private String X_IMAGE_URL = "harimau.png";
         private String O_IMAGE_URL = "monyet.png";
-        private String BACKGROUND_IMAGE_URL = "harimau.png";
+        private String BACKGROUND_IMAGE_URL = "bgtictactoe.jpg";
 
         @Override
         public void paintComponent(Graphics g) {  // Callback via repaint()
