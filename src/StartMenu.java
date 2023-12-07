@@ -1,5 +1,4 @@
 import sudoku.SudokuMain;
-import tictactoe.TTTGraphics;
 
 import javax.swing.*;
 import java.awt.*;
