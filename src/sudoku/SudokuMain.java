@@ -10,17 +10,21 @@ public class SudokuMain extends JFrame {
 
     // private variables
     GameBoardPanel board = new GameBoardPanel();
+    JPanel sudokuPanel = new JPanel();
     JButton btnNewGame = new JButton("New Game");
-
 
     // Constructor
     public SudokuMain() {
-        Container cp = getContentPane();
-        cp.setLayout(new BorderLayout());
-
-        cp.add(board, BorderLayout.CENTER);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setLayout(new FlowLayout(FlowLayout.LEFT,250,50));
+        sudokuPanel.add(board);
+        add(sudokuPanel);
+//        Container cp = getContentPane();
+//        cp.setLayout(new BorderLayout());;
+//        cp.add(board, BorderLayout.CENTER);
 
         // Add a button to the south to re-start the game via board.newGame()
+        add(btnNewGame);
         btnNewGame.addActionListener(new ActionListener() {
 
             // Override the actionPerformed() method
@@ -29,14 +33,13 @@ public class SudokuMain extends JFrame {
             }
 
         });
-        cp.add(btnNewGame, BorderLayout.SOUTH);
-
         // Initialize the game board to start the game
         board.newGame();
 
-        pack();     // Pack the UI components, instead of using setSize()
+        // Pack the UI components, instead of using setSize()
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);  // to handle window-closing
         setTitle("Sudoku");
+        setMinimumSize(new Dimension(500, 520));
         setVisible(true);
     }
 

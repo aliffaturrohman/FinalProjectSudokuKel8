@@ -7,9 +7,12 @@ import javax.swing.border.LineBorder;
 public class GameBoardPanel extends JPanel {
     private static final long serialVersionUID = 1L;  // to prevent serial warning
 
+    static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    static int screenHeight = screenSize.height;
+    int screenWidth = screenSize.width;
     // Define named constants for UI sizes
-    public static final int CELL_SIZE = 60;   // Cell width/height in pixels
-    public static final int BOARD_WIDTH  = CELL_SIZE * SudokuConstants.GRID_SIZE;
+    public static int CELL_SIZE = screenHeight/12;   // Cell width/height in pixels
+    public static int BOARD_WIDTH  = CELL_SIZE * SudokuConstants.GRID_SIZE;
     public static final int BOARD_HEIGHT = CELL_SIZE * SudokuConstants.GRID_SIZE;
     // Board width/height in pixels
 
