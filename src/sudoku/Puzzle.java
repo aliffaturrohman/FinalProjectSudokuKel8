@@ -3,9 +3,11 @@ package sudoku;
 public class Puzzle {
     // All variables have package access
     // The numbers on the puzzle
-    int[][] numbers = new int[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
+    public static final int GRID_SIZE = 9;
+    public static final int SUBGRID_SIZE = 3;
+    int[][] numbers = new int[GRID_SIZE][GRID_SIZE];
     // The clues - isGiven (no need to guess) or need to guess
-    boolean[][] isGiven = new boolean[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
+    boolean[][] isGiven = new boolean[GRID_SIZE][GRID_SIZE];
 
     // Constructor
     public Puzzle() {
@@ -30,8 +32,8 @@ public class Puzzle {
                         {3, 4, 5, 2, 8, 6, 1, 7, 9}};
 
         // Copy from hardcodedNumbers into the array "numbers"
-        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+        for (int row = 0; row < GRID_SIZE; ++row) {
+            for (int col = 0; col < GRID_SIZE; ++col) {
                 numbers[row][col] = hardcodedNumbers[row][col];
             }
         }
@@ -41,9 +43,9 @@ public class Puzzle {
 
         int level1 = getRandomNumber(35,40);
         int falselimit = 0;
-            for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+            for (int row = 0; row < GRID_SIZE; ++row) {
                 int rowfalselimit = 0;
-                for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                for (int col = 0; col < GRID_SIZE; ++col) {
                     int remove = getRandomNumber(0,3);
                     if (remove == 0 && falselimit < level1 && rowfalselimit < 6) {
                         isGiven[row][col] = false;

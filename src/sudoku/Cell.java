@@ -11,7 +11,7 @@ public class Cell extends JTextField{
     //define constants for color and fonts
     public static final Color BG_GIVEN = Color.white;
     public static final Color FG_GIVEN = Color.BLACK;
-    public static final Color FG_NOT_GIVEN = Color.white;
+    public static final Color FG_NOT_GIVEN = Color.black;
     public static final Color BG_TO_GUESS = Color.white;
     public static final Color BG_CORRECT_GUESS = new Color(0,216,0);
     public static final Color BG_WRONG_GUESS = new Color(216,0,0);
@@ -19,7 +19,7 @@ public class Cell extends JTextField{
 
     int row, col;
     int number;
-    CellStatus status;
+    boolean status;
 
     //constructor
     public Cell(int row, int col){
@@ -34,29 +34,31 @@ public class Cell extends JTextField{
     /** Reset this cell for a new game, given the puzzle number and isGiven */
     public void newGame(int number, boolean isGiven) {
         this.number = number;
-        status = isGiven ? CellStatus.GIVEN : CellStatus.TO_GUESS;
+        status = isGiven;
         paint();    // paint itself
     }
 
     /** This Cell (JTextField) paints itself based on its status */
     public void paint() {
         super.setBorder(new LineBorder(Color.lightGray,1));
-        if (status == CellStatus.GIVEN) {
+        if (status == true) {
             // Inherited from JTextField: Set display properties
             super.setText(number + "");
             super.setEditable(false);
             super.setBackground(BG_GIVEN);
             super.setForeground(FG_GIVEN);
-        } else if (status == CellStatus.TO_GUESS) {
+        } else if (status == false) {
             // Inherited from JTextField: Set display properties
             super.setText("");
             super.setEditable(true);
             super.setBackground(BG_TO_GUESS);
             super.setForeground(FG_NOT_GIVEN);
-        } else if (status == CellStatus.CORRECT_GUESS) {  // from TO_GUESS
-            super.setBackground(BG_CORRECT_GUESS);
-        } else if (status == CellStatus.WRONG_GUESS) {    // from TO_GUESS
-            super.setBackground(BG_WRONG_GUESS);
         }
+    }
+    public void painttrue(){
+        super.setBackground(BG_CORRECT_GUESS);
+    }
+    public void paintfalse(){
+        super.setBackground(BG_WRONG_GUESS);
     }
 }
