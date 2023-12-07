@@ -175,9 +175,9 @@ public class TTTGraphics extends JFrame {
     class GamePanel extends JPanel {
         private static final long serialVersionUID = 1L; // to prevent serializable warning
 
-        private String X_IMAGE_URL = "harimau.png";
-        private String O_IMAGE_URL = "monyet.png";
-        private String BACKGROUND_IMAGE_URL = "bgtictactoe.jpg";
+        private String X_IMAGE_URL = "Assets/harimau.png";
+        private String O_IMAGE_URL = "Assets/monyet.png";
+        private String BACKGROUND_IMAGE_URL = "Assets/bgtictactoe.jpg";
 
         @Override
         public void paintComponent(Graphics g) {  // Callback via repaint()
@@ -186,6 +186,7 @@ public class TTTGraphics extends JFrame {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             Image X_IMAGE = toolkit.getImage(X_IMAGE_URL);
             Image O_IMAGE = toolkit.getImage(O_IMAGE_URL);
+            Image BACKGROUND_IMAGE = toolkit.getImage(BACKGROUND_IMAGE_URL);
 
             BufferedImage bgImage = null;
             try {
