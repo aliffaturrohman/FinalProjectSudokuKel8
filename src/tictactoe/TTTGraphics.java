@@ -32,7 +32,7 @@ public class TTTGraphics extends JFrame {
     public static final Color COLOR_BG = Color.WHITE;  // background
     public static final Color COLOR_BG_STATUS = new Color(216, 216, 216);
     public static final Color COLOR_GRID   = new Color(34, 152, 23);  // grid lines
-    //    public static final Color COLOR_CROSS  = new Color(211, 45, 65);  // Red #D32D41
+//    public static final Color COLOR_CROSS  = new Color(211, 45, 65);  // Red #D32D41
 //    public static final Color COLOR_NOUGHT = new Color(76, 181, 245); // Blue #4CB5F5
     public static final Font FONT_STATUS = new Font("OCR A Extended", Font.PLAIN, 14);
 
@@ -175,9 +175,9 @@ public class TTTGraphics extends JFrame {
     class GamePanel extends JPanel {
         private static final long serialVersionUID = 1L; // to prevent serializable warning
 
-        private String X_IMAGE_URL = "harimau.png";
-        private String O_IMAGE_URL = "monyet.png";
-        private String BACKGROUND_IMAGE_URL = "bgtictactoe.jpg";
+        private String X_IMAGE_URL = "Assets/harimau.png";
+        private String O_IMAGE_URL = "Assets/monyet.png";
+        private String BACKGROUND_IMAGE_URL = "Assets/bgtictactoe.jpg";
 
         @Override
         public void paintComponent(Graphics g) {  // Callback via repaint()
