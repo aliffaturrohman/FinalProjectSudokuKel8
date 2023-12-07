@@ -1,9 +1,13 @@
 package tictactoe;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 /**
  * Tic-Tac-Toe: Two-player Graphics version with Simple-OO in one class
@@ -28,8 +32,8 @@ public class TTTGraphics extends JFrame {
     public static final Color COLOR_BG = Color.WHITE;  // background
     public static final Color COLOR_BG_STATUS = new Color(216, 216, 216);
     public static final Color COLOR_GRID   = new Color(34, 152, 23);  // grid lines
-    public static final Color COLOR_CROSS  = new Color(211, 45, 65);  // Red #D32D41
-    public static final Color COLOR_NOUGHT = new Color(76, 181, 245); // Blue #4CB5F5
+//    public static final Color COLOR_CROSS  = new Color(211, 45, 65);  // Red #D32D41
+//    public static final Color COLOR_NOUGHT = new Color(76, 181, 245); // Blue #4CB5F5
     public static final Font FONT_STATUS = new Font("OCR A Extended", Font.PLAIN, 14);
 
 
@@ -182,11 +186,19 @@ public class TTTGraphics extends JFrame {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             Image X_IMAGE = toolkit.getImage(X_IMAGE_URL);
             Image O_IMAGE = toolkit.getImage(O_IMAGE_URL);
-            Image BACKGROUND_IMAGE = toolkit.getImage(BACKGROUND_IMAGE_URL);
+
+            BufferedImage bgImage = null;
+            try {
+                bgImage = ImageIO.read(new File(BACKGROUND_IMAGE_URL));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Image scaledBgImage = bgImage.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+
 
             setBackground(Color.WHITE);  // set its background color
             // Draw the background image
-            g.drawImage(BACKGROUND_IMAGE, 0, 0, BOARD_WIDTH, BOARD_HEIGHT, null);
+            g.drawImage(scaledBgImage, 0, 0, BOARD_WIDTH, BOARD_HEIGHT, null);
             // Draw the grid lines
             g.setColor(COLOR_GRID);
             // Draw the grid lines
