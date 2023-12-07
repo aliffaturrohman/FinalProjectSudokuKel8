@@ -2,79 +2,102 @@ import sudoku.SudokuMain;
 import tictactoe.TTTGraphics;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import javax.imageio.*;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class StartMenu extends JFrame {
-    public static void main(String[] args) {
-        int width = 800;
-        int height = 600;
-        int buttonWidth = 220;
-        int buttonHeight = 50;
+
+    public static void main(String[] args) throws IOException {
+
+        JFrame frame = new JFrame("Start Menu");
+
+        frame.setSize(800,600);
+        frame.setUndecorated(false);
+
+        int buttonHeight = 75;
+        int buttonWidth = 300;
+        int exitButtonHeight = 50;
+        int exitButtonWidth = 50;
+
+        ImageIcon logo = new ImageIcon("Assets/logo.png");
+
+        BufferedImage bgImage = ImageIO.read(new File("Assets/backgroundimage.png"));
+        Image scaledBgImage = bgImage.getScaledInstance(frame.getWidth(), frame.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon backgroundImage = new ImageIcon(scaledBgImage);
+        JLabel background = new JLabel(backgroundImage);
+        background.setIcon(backgroundImage);
+        background.setHorizontalAlignment(JLabel.CENTER);
+
+        BufferedImage sudokuIcon = ImageIO.read(new File("Assets/sudokuButton.png"));
+        Image sudokuImage = sudokuIcon.getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_SMOOTH);
+        ImageIcon scaledSudokuIcon = new ImageIcon(sudokuImage);
+
+        BufferedImage ticTacToeIcon = ImageIO.read(new File("Assets/ticTacToeButton.png"));
+        Image ticTacToeImage = ticTacToeIcon.getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_SMOOTH);
+        ImageIcon scaledTicTacToeIcon = new ImageIcon(ticTacToeImage);
+
+        JButton exitButton = new JButton("X");
 
 
+        JLabel sudokuButton = new JLabel(scaledSudokuIcon);
+        JLabel ticTacToeButton = new JLabel(scaledTicTacToeIcon);
+        JLabel logoImage = new JLabel();
+        logoImage.setIcon(logo);
+        logoImage.setHorizontalAlignment(JLabel.CENTER);
 
 
-        JFrame frame = new JFrame("Start Menu"); // Set the title for the JFrame
-        JButton buttonSudoku = new JButton("Sudoku");
-        JButton buttonTicTacToe = new JButton("TicTacToe");
-        ImageIcon icon = new ImageIcon("logo.png");
-        frame.setIconImage(icon.getImage());
-        buttonSudoku.setBounds((width * 3 / 4) - (buttonWidth/2), (height / 2) - (buttonHeight/2), buttonWidth, buttonHeight);
-        buttonTicTacToe.setBounds((width / 4) - (buttonWidth/2), (height / 2) - (buttonHeight/2), buttonWidth, buttonHeight);
-        buttonSudoku.setBorder(new RoundedBorder(50));
-        buttonTicTacToe.setBorder(new RoundedBorder(50));
-        buttonSudoku.setForeground(Color.RED);
-        buttonTicTacToe.setForeground(Color.RED);
-        frame.add(buttonSudoku); // Adding button to JFrame
-        frame.add(buttonTicTacToe); // Adding button to JFrame
-
-        frame.setSize(width, height); // Set the size of the frame
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set default close operation
-        frame.setLayout(null); // Using no layout manager
-        frame.setVisible(true); // Making the frame visible
-
-        buttonSudoku.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        new SudokuMain();
-                    }
-                });
+        exitButton.setBackground(new Color(220,53,69));
+        exitButton.setForeground(Color.WHITE);
+        sudokuButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                SwingUtilities.invokeLater(() -> new SudokuMain());
             }
         });
-        buttonTicTacToe.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        new TTTGraphics();
-                    }
-                });
+
+        ticTacToeButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                SwingUtilities.invokeLater(() -> new TTTGraphics());
             }
         });
-    }
 
+        frame.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent componentEvent) {
+                Dimension size = frame.getSize();
+                int width = (int) size.getWidth();
+                int height = (int) size.getHeight();
 
-}
+                background.setBounds(0, 0, width, height);
+                sudokuButton.setBounds((width * 3 / 4) - (buttonWidth / 2), (height * 3 / 4) - (buttonHeight / 2), buttonWidth, buttonHeight);
+                ticTacToeButton.setBounds((width / 4) - (buttonWidth / 2), (height * 3 / 4) - (buttonHeight / 2), buttonWidth, buttonHeight);
+                logoImage.setBounds((width / 2) - (logo.getIconWidth() / 2), 10, logo.getIconWidth(), logo.getIconHeight());
+                exitButton.setBounds(width / 8 - (exitButtonWidth /2 ), (height / 8) - (exitButtonHeight /2 ), exitButtonWidth,exitButtonHeight);
+            }
+        });
 
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
 
-class RoundedBorder implements Border {
-    private int radius;
-    RoundedBorder(int radius) {
-        this.radius = radius;
-    }
-    public Insets getBorderInsets(Component c) {
-        return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
-    }
-    public boolean isBorderOpaque() {
-        return true;
-    }
-    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - frame.getWidth()) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - frame.getHeight()) / 2);
+
+        frame.add(exitButton);
+        frame.add(logoImage);
+        frame.add(sudokuButton);
+        frame.add(ticTacToeButton);
+        frame.add(background);
+
+        frame.setLayout(null);
+        frame.setVisible(true);
     }
 }
