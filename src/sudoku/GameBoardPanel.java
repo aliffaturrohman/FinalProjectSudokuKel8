@@ -7,6 +7,7 @@ import javax.swing.border.LineBorder;
 public class GameBoardPanel extends JPanel {
     public static final int GRID_SIZE = 9;
     public static final int SUBGRID_SIZE = 3;
+    private int score=0;
     private static final long serialVersionUID = 1L;  // to prevent serial warning
 
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -106,6 +107,7 @@ private class CellInputListener implements ActionListener {
         if (numberIn == sourceCell.number) {
            sourceCell.status = true;
            sourceCell.painttrue();
+           score+=100;
         } else {
            sourceCell.paintfalse();
         }
@@ -118,5 +120,8 @@ private class CellInputListener implements ActionListener {
         JOptionPane.showMessageDialog(null, "congratulation");
     }
     }
+}
+public int getScore(){
+        return score;
 }
 }
