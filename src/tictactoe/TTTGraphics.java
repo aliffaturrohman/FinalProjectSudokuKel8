@@ -64,6 +64,9 @@ public class TTTGraphics extends JFrame {
         gamePanel = new GamePanel();  // Construct a drawing canvas (a JPanel)
         gamePanel.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
 
+//        setUndecorated(true);
+
+        setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().width - gamePanel.getHeight())/ 3.2) , (Toolkit.getDefaultToolkit().getScreenSize().height - gamePanel.getHeight()) / 8);
         // The canvas (JPanel) fires a MouseEvent upon mouse-click
         gamePanel.addMouseListener(new MouseAdapter() {
             @Override

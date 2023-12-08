@@ -7,7 +7,6 @@ import javax.swing.border.LineBorder;
 
 public class GameBoardPanel extends JPanel {
     public static final int GRID_SIZE = 9;
-    public int levelGame;
     private static final long serialVersionUID = 1L;  // to prevent serial warning
 
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

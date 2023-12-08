@@ -1,8 +1,6 @@
 package sudoku;
 
 import javax.swing.text.*;
-
-
 class LimitInputCell extends PlainDocument {
     private int limit;
 
