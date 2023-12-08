@@ -54,19 +54,21 @@ public class TTTGraphics extends JFrame {
     // UI Components
     private GamePanel gamePanel; // Drawing canvas (JPanel) for the game board
     private JLabel statusBar;  // Status Bar
+    private ImageIcon logo;
 
     /** Constructor to setup the game and the GUI components */
     public TTTGraphics() {
         // Initialize the game objects
         initGame();
-
+        logo = new ImageIcon("Assets/logo.png");
+        setIconImage(logo.getImage());
         // Set up GUI components
         gamePanel = new GamePanel();  // Construct a drawing canvas (a JPanel)
         gamePanel.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
 
-//        setUndecorated(true);
-
         setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().width - gamePanel.getHeight())/ 3.2) , (Toolkit.getDefaultToolkit().getScreenSize().height - gamePanel.getHeight()) / 8);
+
+//        setUndecorated(true);
         // The canvas (JPanel) fires a MouseEvent upon mouse-click
         gamePanel.addMouseListener(new MouseAdapter() {
             @Override

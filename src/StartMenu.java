@@ -18,7 +18,7 @@ public class StartMenu extends JFrame {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         frame.setSize(screenSize.width, screenSize.height);
-        frame.setUndecorated(true);
+        frame.setUndecorated(false);
 
         int buttonHeight = 75;
         int buttonWidth = 300;
@@ -91,6 +91,7 @@ public class StartMenu extends JFrame {
             }
         });
 
+        frame.setIconImage(logo.getImage());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - frame.getWidth()) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - frame.getHeight()) / 2);
 

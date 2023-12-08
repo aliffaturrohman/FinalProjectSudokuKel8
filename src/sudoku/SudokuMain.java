@@ -26,6 +26,7 @@ public class SudokuMain {
     JPanel buttonPanel = new JPanel();
     JButton btnSolve = new JButton("Solve");
     private ImageIcon bgsudoku;
+    private ImageIcon logo;
     private JLabel bgLabel;
     JPanel container = new JPanel();
     JMenuBar difficulty;
@@ -37,6 +38,7 @@ public class SudokuMain {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLayout(null);
 
+        logo = new ImageIcon("Assets/logo.png");
         bgsudoku = new ImageIcon("Assets/bgsudoku.jpg");
         bgLabel = new JLabel(bgsudoku);
 
@@ -45,6 +47,7 @@ public class SudokuMain {
         container.setBounds(screenWidth/2-300,20,600,650);
         frame.add(container);
         frame.add(bgLabel);
+        frame.setIconImage(logo.getImage());
 
         difficulty = new JMenuBar();
 
