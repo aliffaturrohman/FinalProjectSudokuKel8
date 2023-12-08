@@ -24,10 +24,10 @@ public class GameBoardPanel extends JPanel {
     private Cell[][] cells = new Cell[GRID_SIZE][GRID_SIZE];
     /** It also contains a Puzzle with array numbers and isGiven */
     private Puzzle puzzle = new Puzzle();
-    private int score=0;
+    private String diff="Easy";
     private int mistake=0;
     JPanel sudokugrid = new JPanel();
-    JLabel scorelabel = new JLabel("Score: "+score);
+    JLabel Difficultylabel = new JLabel("Difficulty: "+diff);
     JLabel mistakeslabel = new JLabel("Mistakes: "+mistake+"/9");
     StopwatchLabel stopwatchLabel = new StopwatchLabel();
     JPanel scorebox = new JPanel();
@@ -36,15 +36,17 @@ public class GameBoardPanel extends JPanel {
         super.setLayout(new BorderLayout());
         setOpaque(false);
         scorebox.setOpaque(false);
-        scorebox.setLayout(new FlowLayout(FlowLayout.RIGHT,BOARD_WIDTH/8,0));
-        scorebox.add(scorelabel);
-        scorebox.add(mistakeslabel);
+        scorebox.setLayout(new FlowLayout(FlowLayout.RIGHT,45,0));
+        scorebox.add(Difficultylabel);
         scorebox.add(stopwatchLabel);
+        scorebox.add(mistakeslabel);
         scorebox.setPreferredSize(new Dimension(BOARD_WIDTH,50));
         super.add(sudokugrid, BorderLayout.CENTER);
         super.add(scorebox, BorderLayout.NORTH);
-        scorelabel.setFont(new Font("Arial",Font.PLAIN,25));
+        Difficultylabel.setFont(new Font("Arial",Font.PLAIN,25));
         mistakeslabel.setFont(new Font("Arial",Font.PLAIN,25));
+        sudokugrid.setPreferredSize(new Dimension(BOARD_WIDTH,BOARD_HEIGHT));
+        sudokugrid.setBorder(new LineBorder(Color.black,4));
         sudokugrid.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));  // JPanel
 
         // Allocate the 2D array of Cell, and added into JPanel.
@@ -79,6 +81,19 @@ public class GameBoardPanel extends JPanel {
     public void newGame(int levelGame) {
         // Generate a new puzzle
         puzzle.newPuzzle(levelGame);
+        if (levelGame==1){
+            diff="Easy";
+        }
+        else if (levelGame==2){
+            diff="Medium";
+        }
+        else if (levelGame==3){
+            diff="Hard";
+        }
+        stopwatchLabel.startTime = System.currentTimeMillis();
+        Difficultylabel.setText("Difficulty: "+diff);
+        mistake=0;
+        mistakeslabel.setText("Mistakes: "+mistake+"/9");
 
         // Initialize all the 9x9 cells, based on the puzzle.
         for (int row = 0; row < GRID_SIZE; ++row) {
@@ -126,25 +141,23 @@ private class CellInputListener implements ActionListener {
         if (numberIn == sourceCell.number) {
            sourceCell.status = true;
            sourceCell.painttrue();
-           score+=100;
         } else {
            sourceCell.paintfalse();
            mistake+=1;
         }
-        scorelabel.setText("Score: "+score);
         mistakeslabel.setText("Mistakes: "+mistake+"/9");
         /*
          * [TODO 6] (later)
          * Check if the player has solved the puzzle after this move,
          *   by calling isSolved(). Put up a congratulation JOptionPane, if so.
          */
-        if(isSolved()){
-        JOptionPane.showMessageDialog(null, "Congratulation");
-        if (mistake>=9){
-            JOptionPane.showMessageDialog(null,"You Failed");
+        if(isSolved()) {
+            JOptionPane.showMessageDialog(null, "Congratulation");
+        }
+        if (mistake>=9) {
+            JOptionPane.showMessageDialog(null, "You Failed");
             solve();
         }
-    }
     }
 }
 public void solve(){
