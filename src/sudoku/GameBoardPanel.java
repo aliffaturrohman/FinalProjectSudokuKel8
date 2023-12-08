@@ -45,6 +45,8 @@ public class GameBoardPanel extends JPanel {
         super.add(scorebox, BorderLayout.NORTH);
         Difficultylabel.setFont(new Font("Arial",Font.PLAIN,25));
         mistakeslabel.setFont(new Font("Arial",Font.PLAIN,25));
+        sudokugrid.setPreferredSize(new Dimension(BOARD_WIDTH,BOARD_HEIGHT));
+        sudokugrid.setBorder(new LineBorder(Color.black,4));
         sudokugrid.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));  // JPanel
 
         // Allocate the 2D array of Cell, and added into JPanel.
