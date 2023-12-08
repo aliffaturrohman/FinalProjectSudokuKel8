@@ -1,5 +1,3 @@
-package tictactoe;
-
 import sudoku.SudokuMain;
 
 import java.awt.*;

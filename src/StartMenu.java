@@ -1,5 +1,4 @@
 import sudoku.SudokuMain;
-import tictactoe.StopwatchLabel;
 import tictactoe.TTTGraphics;
 
 import javax.swing.*;
@@ -51,8 +50,6 @@ public class StartMenu extends JFrame {
         logoImage.setIcon(logo);
         logoImage.setHorizontalAlignment(JLabel.CENTER);
 
-        StopwatchLabel stopwatch = new StopwatchLabel();
-
 
         exitButton.setBackground(new Color(220,53,69));
         exitButton.setForeground(Color.WHITE);
@@ -94,12 +91,11 @@ public class StartMenu extends JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - frame.getWidth()) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - frame.getHeight()) / 2);
 
-        frame.add(stopwatch);
-//        frame.add(exitButton);
-//        frame.add(logoImage);
-//        frame.add(sudokuButton);
-//        frame.add(ticTacToeButton);
-//        frame.add(background);
+        frame.add(exitButton);
+        frame.add(logoImage);
+        frame.add(sudokuButton);
+        frame.add(ticTacToeButton);
+        frame.add(background);
 
         frame.setLayout(null);
         frame.setVisible(true);
