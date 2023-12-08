@@ -18,7 +18,7 @@ public class Puzzle {
     //  to control the difficulty level.
     // This method shall set (or update) the arrays numbers and isGiven
 
-    public void newPuzzle() {
+    public void newPuzzle(int levelGame) {
         // I hardcode a puzzle here for illustration and testing.
         int[][] hardcodedNumbers =
                 {{5, 3, 4, 6, 7, 8, 9, 1, 2},
@@ -42,14 +42,21 @@ public class Puzzle {
         // Hardcoded for testing, only 2 cells of "8" is NOT GIVEN
 
 
-        GameBoardPanel level = new GameBoardPanel();
-        int level1 = getRandomNumber( level.levelGame * 5 , level.levelGame * 7);
+        int levelselected = 0;
+        if (levelGame==1){
+        levelselected = getRandomNumber(28 , 35);}
+        else if (levelGame==2){
+            levelselected = getRandomNumber(35,50);
+        }
+        else if (levelGame==3){
+            levelselected = getRandomNumber(50,65);
+        }
         int falselimit = 0;
         for (int row = 0; row < GRID_SIZE; ++row) {
             int rowfalselimit = 0;
             for (int col = 0; col < GRID_SIZE; ++col) {
                 int remove = getRandomNumber(0,3);
-                if (remove == 0 && falselimit < level1 && rowfalselimit < 6) {
+                if (remove == 0 && falselimit < levelselected && rowfalselimit < 6) {
                     isGiven[row][col] = false;
                     falselimit = falselimit + 1;
                     rowfalselimit = rowfalselimit + 1;

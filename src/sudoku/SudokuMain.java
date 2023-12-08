@@ -28,8 +28,10 @@ public class SudokuMain {
     private ImageIcon bgsudoku;
     private JLabel bgLabel;
     JPanel container = new JPanel();
-
-
+    JPanel difficulty = new JPanel();
+    JButton easy = new JButton("Easy");
+    JButton medium = new JButton("Medium");
+    JButton hard = new JButton("Hard");
     // Constructor
     public SudokuMain() {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -37,13 +39,13 @@ public class SudokuMain {
 
         bgsudoku = new ImageIcon("Assets/bgsudoku.jpg");
         bgLabel = new JLabel(bgsudoku);
-//        bgLabel.setSize(screenWidth,screenHeight);
 
         bgLabel.setBounds(0,0,screenWidth,screenHeight);
         container.setOpaque(false);
-        container.setBounds(screenWidth/2-300,20,600,700);
+        container.setBounds(screenWidth/2-350,20,700,800);
         frame.add(container);
         frame.add(bgLabel);
+
         container.setLayout(new BorderLayout());
         sudokuPanel.add(board);
         sudokuPanel.setOpaque(false);
@@ -75,6 +77,13 @@ public class SudokuMain {
         });
         // Initialize the game board to start the game
         board.newGame(levelGame);
+        container.add(difficulty,BorderLayout.LINE_END);
+        difficulty.setLayout(new FlowLayout());
+        difficulty.setPreferredSize(new Dimension(50,100));
+        difficulty.setOpaque(false);
+        difficulty.add(easy);
+        difficulty.add(medium);
+        difficulty.add(hard);
 
         // Pack the UI components, instead of using setSize()
         frame.setLocationRelativeTo(null);
