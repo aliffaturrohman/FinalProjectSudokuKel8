@@ -15,11 +15,9 @@ import javax.swing.JLabel;
  */
 public class TTTGraphics extends JFrame {
     private static final long serialVersionUID = 1L; // to prevent serializable warning
-
     // Define named constants for the game board
     public static final int ROWS = 3;  // ROWS x COLS cells
     public static final int COLS = 3;
-
     // Define named constants for the drawing graphics
     public static final int CELL_SIZE = 200; // cell width/height (square)
     public static final int BOARD_WIDTH  = CELL_SIZE * COLS; // the drawing canvas
@@ -30,15 +28,12 @@ public class TTTGraphics extends JFrame {
     public static final int CELL_PADDING = CELL_SIZE / 5;
     public static final int SYMBOL_SIZE = CELL_SIZE - CELL_PADDING * 2; // width/height
     public static final int SYMBOL_STROKE_WIDTH = 8; // pen's stroke width
-    public static final Color COLOR_BG = Color.WHITE;  // background
+//    public static final Color COLOR_BG = Color.WHITE;  // background
     public static final Color COLOR_BG_STATUS = new Color(216, 216, 216);
     public static final Color COLOR_GRID   = new Color(34, 152, 23);  // grid lines
 //    public static final Color COLOR_CROSS  = new Color(211, 45, 65);  // Red #D32D41
 //    public static final Color COLOR_NOUGHT = new Color(76, 181, 245); // Blue #4CB5F5
     public static final Font FONT_STATUS = new Font("OCR A Extended", Font.PLAIN, 14);
-
-
-
 
 
     // This enum (inner class) contains the various states of the game
@@ -95,7 +90,7 @@ public class TTTGraphics extends JFrame {
             }
         });
 
-        // Setup the status bar (JLabel) to display status message
+        // set up the status bar (JLabel) to display status message
         statusBar = new JLabel("       ");
         statusBar.setFont(FONT_STATUS);
         statusBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
@@ -180,6 +175,7 @@ public class TTTGraphics extends JFrame {
         private String O_IMAGE_URL = "Assets/monyet.png";
         private String BACKGROUND_IMAGE_URL = "Assets/bgtictactoe.jpg";
 
+
         @Override
         public void paintComponent(Graphics g) {  // Callback via repaint()
             super.paintComponent(g);
@@ -215,6 +211,7 @@ public class TTTGraphics extends JFrame {
             }
 
             // Draw the Seeds of all the cells if they are not empty
+
             // Use Graphics2D which allows us to set the pen's stroke
             Graphics2D g2d = (Graphics2D) g;
             g2d.setStroke(new BasicStroke(SYMBOL_STROKE_WIDTH,
@@ -245,6 +242,12 @@ public class TTTGraphics extends JFrame {
                 statusBar.setForeground(Color.RED);
                 statusBar.setText("'Monkey' Won! Click to play again");
             }
+            int imageX = BOARD_WIDTH + 20;  // Sesuaikan posisi X gambar
+            int imageY = 20;  // Sesuaikan posisi Y gambar
+            Image yourImage = (currentPlayer == Seed.CROSS) ? X_IMAGE : O_IMAGE;
+            int imageWidth = SYMBOL_SIZE;  // Sesuaikan dengan ukuran gambar yang diinginkan
+            int imageHeight = SYMBOL_SIZE; // Sesuaikan dengan ukuran gambar yang diinginkan
+            g.drawImage(yourImage, imageX, imageY, imageWidth, imageHeight, null);
         }
     }
 }
