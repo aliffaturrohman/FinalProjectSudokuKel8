@@ -28,10 +28,12 @@ public class SudokuMain {
     private ImageIcon bgsudoku;
     private JLabel bgLabel;
     JPanel container = new JPanel();
-    JPanel difficulty = new JPanel();
-    JButton easy = new JButton("Easy");
-    JButton medium = new JButton("Medium");
-    JButton hard = new JButton("Hard");
+    JMenuBar difficulty;
+    JMenu diffmenu;
+    JMenuItem easy, medium, hard;
+//    JButton easy = new JButton("Easy");
+//    JButton medium = new JButton("Medium");
+//    JButton hard = new JButton("Hard");
     // Constructor
     public SudokuMain() {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -46,12 +48,37 @@ public class SudokuMain {
         frame.add(container);
         frame.add(bgLabel);
 
+        difficulty = new JMenuBar();
+
+        // create a menu
+        diffmenu = new JMenu("  Select Difficulty Level  ");
+
+        // create menuitems
+        easy = new JMenuItem("Easy");
+        medium = new JMenuItem("Medium");
+        hard = new JMenuItem("Hard");
+
+        // add menu items to menu
+        diffmenu.add(easy);
+        diffmenu.add(medium);
+        diffmenu.add(hard);
+
+        // add menu to menu bar
+        difficulty.add(diffmenu);
+        difficulty.setPreferredSize(new Dimension(150,40));
+        easy.setPreferredSize(new Dimension(150,20));
+        medium.setPreferredSize(new Dimension(150,20));
+        hard.setPreferredSize(new Dimension(150,20));
+
+        // add menubar to frame
+        buttonPanel.add(difficulty);
+
         container.setLayout(new BorderLayout());
         sudokuPanel.add(board);
         sudokuPanel.setOpaque(false);
         container.add(sudokuPanel, BorderLayout.CENTER);
         // Add a button to the south to re-start the game via board.newGame()
-        buttonPanel.setLayout(new FlowLayout());
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT,30,10));
         container.add(buttonPanel,BorderLayout.SOUTH);
         buttonPanel.add(btnNewGame);
         buttonPanel.add(btnSolve);
@@ -60,30 +87,34 @@ public class SudokuMain {
         btnNewGame.setPreferredSize(new Dimension(200,40));
         btnSolve.setPreferredSize(new Dimension(200,40));
         btnSolve.addActionListener(new ActionListener() {
-
-            // Override the actionPerformed() method
             public void actionPerformed(ActionEvent e){
-
                 board.solve();
             }
         });
         btnNewGame.addActionListener(new ActionListener() {
-
-            // Override the actionPerformed() method
             public void actionPerformed(ActionEvent e){
+                board.newGame(levelGame);}
+        });
+        easy.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                levelGame=1;
                 board.newGame(levelGame);
             }
-
+        });
+        medium.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                levelGame=2;
+                board.newGame(levelGame);
+            }
+        });
+        hard.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                levelGame=3;
+                board.newGame(levelGame);
+            }
         });
         // Initialize the game board to start the game
         board.newGame(levelGame);
-        container.add(difficulty,BorderLayout.LINE_END);
-        difficulty.setLayout(new FlowLayout());
-        difficulty.setPreferredSize(new Dimension(50,100));
-        difficulty.setOpaque(false);
-        difficulty.add(easy);
-        difficulty.add(medium);
-        difficulty.add(hard);
 
         // Pack the UI components, instead of using setSize()
         frame.setLocationRelativeTo(null);

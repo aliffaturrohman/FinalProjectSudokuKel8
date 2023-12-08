@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class StopwatchLabel extends JLabel {
 
-    private long startTime = System.currentTimeMillis();
+    public long startTime = System.currentTimeMillis();
 
     public StopwatchLabel() {
         setFont(new Font("Arial", Font.PLAIN, 24));
