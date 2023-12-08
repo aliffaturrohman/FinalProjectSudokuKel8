@@ -41,7 +41,9 @@ public class Puzzle {
         // Need to use input parameter cellsToGuess!
         // Hardcoded for testing, only 2 cells of "8" is NOT GIVEN
 
-        int level1 = getRandomNumber(35,40);
+
+        GameBoardPanel level = new GameBoardPanel();
+        int level1 = getRandomNumber( level.levelGame * 5 , level.levelGame * 7);
         int falselimit = 0;
             for (int row = 0; row < GRID_SIZE; ++row) {
                 int rowfalselimit = 0;

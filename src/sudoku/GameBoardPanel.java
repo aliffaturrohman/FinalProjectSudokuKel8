@@ -1,4 +1,5 @@
 package sudoku;
+import tictactoe.StopwatchLabel;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -6,6 +7,7 @@ import javax.swing.border.LineBorder;
 
 public class GameBoardPanel extends JPanel {
     public static final int GRID_SIZE = 9;
+    public int levelGame;
     private static final long serialVersionUID = 1L;  // to prevent serial warning
 
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -27,6 +29,7 @@ public class GameBoardPanel extends JPanel {
     JPanel sudokugrid = new JPanel();
     JLabel scorelabel = new JLabel("Score: "+score);
     JLabel mistakeslabel = new JLabel("Mistakes: "+mistake+"/9");
+    StopwatchLabel stopwatchLabel = new StopwatchLabel();
     JPanel scorebox = new JPanel();
     /** Constructor */
     public GameBoardPanel() {
@@ -34,6 +37,7 @@ public class GameBoardPanel extends JPanel {
         scorebox.setLayout(new FlowLayout(FlowLayout.RIGHT,BOARD_WIDTH/4,0));
         scorebox.add(scorelabel);
         scorebox.add(mistakeslabel);
+        scorebox.add(stopwatchLabel);
         scorebox.setPreferredSize(new Dimension(BOARD_WIDTH,50));
         super.add(sudokugrid, BorderLayout.CENTER);
         super.add(scorebox, BorderLayout.NORTH);
@@ -72,6 +76,9 @@ public class GameBoardPanel extends JPanel {
      */
     public void newGame() {
         // Generate a new puzzle
+        int levelGame = Integer.parseInt(JOptionPane.showInputDialog(this, "Select Your Level :"));
+
+
         puzzle.newPuzzle();
 
         // Initialize all the 9x9 cells, based on the puzzle.
@@ -81,6 +88,7 @@ public class GameBoardPanel extends JPanel {
             }
         }
     }
+
 
     /**
      * Return true if the puzzle is solved

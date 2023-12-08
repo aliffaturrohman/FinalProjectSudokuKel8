@@ -18,7 +18,8 @@ public class StartMenu extends JFrame {
         JFrame frame = new JFrame("Start Menu");
 
         frame.setSize(800,600);
-        frame.setUndecorated(false);
+//        frame.setExtendedState(MAXIMIZED_BOTH);
+//        frame.setUndecorated(true);
 
         int buttonHeight = 75;
         int buttonWidth = 300;
@@ -95,11 +96,11 @@ public class StartMenu extends JFrame {
         frame.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - frame.getWidth()) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - frame.getHeight()) / 2);
 
         frame.add(stopwatch);
-//        frame.add(exitButton);
-//        frame.add(logoImage);
-//        frame.add(sudokuButton);
-//        frame.add(ticTacToeButton);
-//        frame.add(background);
+        frame.add(exitButton);
+        frame.add(logoImage);
+        frame.add(sudokuButton);
+        frame.add(ticTacToeButton);
+        frame.add(background);
 
         frame.setLayout(null);
         frame.setVisible(true);
