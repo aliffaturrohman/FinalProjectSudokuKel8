@@ -18,7 +18,7 @@ public class Puzzle {
     //  to control the difficulty level.
     // This method shall set (or update) the arrays numbers and isGiven
 
-    public void newPuzzle(int levelGame) {
+    public void newPuzzle() {
         // I hardcode a puzzle here for illustration and testing.
         int[][] hardcodedNumbers =
                 {{5, 3, 4, 6, 7, 8, 9, 1, 2},
@@ -40,25 +40,27 @@ public class Puzzle {
 
         // Need to use input parameter cellsToGuess!
         // Hardcoded for testing, only 2 cells of "8" is NOT GIVEN
-        int levelchosen = 0;
-        if (levelGame==1){
-        levelchosen = getRandomNumber(25, 40);}
+
+
+        GameBoardPanel level = new GameBoardPanel();
+        int level1 = getRandomNumber( level.levelGame * 5 , level.levelGame * 7);
         int falselimit = 0;
-            for (int row = 0; row < GRID_SIZE; ++row) {
-                int rowfalselimit = 0;
-                for (int col = 0; col < GRID_SIZE; ++col) {
-                    int remove = getRandomNumber(0,3);
-                    if (remove == 0 && falselimit < levelchosen && rowfalselimit < 6) {
-                        isGiven[row][col] = false;
-                        falselimit = falselimit + 1;
-                        rowfalselimit = rowfalselimit + 1;
-                    } else {
-                        isGiven[row][col] = true;
-                    }
+        for (int row = 0; row < GRID_SIZE; ++row) {
+            int rowfalselimit = 0;
+            for (int col = 0; col < GRID_SIZE; ++col) {
+                int remove = getRandomNumber(0,3);
+                if (remove == 0 && falselimit < level1 && rowfalselimit < 6) {
+                    isGiven[row][col] = false;
+                    falselimit = falselimit + 1;
+                    rowfalselimit = rowfalselimit + 1;
+                } else {
+                    isGiven[row][col] = true;
                 }
             }
+        }
     }
     public int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
     }
+
 }
