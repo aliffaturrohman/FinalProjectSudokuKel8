@@ -59,7 +59,10 @@ public class GameBoardPanel extends JPanel {
 
         // [TODO 3] Allocate a common listener as the ActionEvent listener for all the
         //  Cells (JTextFields)
+
+
         CellInputListener listener = new CellInputListener();
+
 
 
         // [TODO 4] Adds this common listener to all editable cells
@@ -125,6 +128,7 @@ private class CellInputListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Get a reference of the JTextField that triggers this action event
         Cell sourceCell = (Cell)e.getSource();
+
 
         // Retrieve the int entered
         int numberIn = Integer.parseInt(sourceCell.getText());

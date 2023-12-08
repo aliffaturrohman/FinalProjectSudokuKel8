@@ -27,6 +27,7 @@ public class Cell extends JTextField{
         this.row = row;
         this.col = col;
 
+        setDocument(new LimitInputCell(1));//Make cell has a limit length input
         super.setHorizontalAlignment(JTextField.CENTER);
         super.setFont(FONT_NUMBERS);
     }
