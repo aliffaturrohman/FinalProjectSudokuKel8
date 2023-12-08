@@ -41,21 +41,23 @@ public class Puzzle {
         // Need to use input parameter cellsToGuess!
         // Hardcoded for testing, only 2 cells of "8" is NOT GIVEN
 
-        int level1 = getRandomNumber(35,40);
+
+        GameBoardPanel level = new GameBoardPanel();
+        int level1 = getRandomNumber( level.levelGame * 5 , level.levelGame * 7);
         int falselimit = 0;
-            for (int row = 0; row < GRID_SIZE; ++row) {
-                int rowfalselimit = 0;
-                for (int col = 0; col < GRID_SIZE; ++col) {
-                    int remove = getRandomNumber(0,3);
-                    if (remove == 0 && falselimit < level1 && rowfalselimit < 6) {
-                        isGiven[row][col] = false;
-                        falselimit = falselimit + 1;
-                        rowfalselimit = rowfalselimit + 1;
-                    } else {
-                        isGiven[row][col] = true;
-                    }
+        for (int row = 0; row < GRID_SIZE; ++row) {
+            int rowfalselimit = 0;
+            for (int col = 0; col < GRID_SIZE; ++col) {
+                int remove = getRandomNumber(0,3);
+                if (remove == 0 && falselimit < level1 && rowfalselimit < 6) {
+                    isGiven[row][col] = false;
+                    falselimit = falselimit + 1;
+                    rowfalselimit = rowfalselimit + 1;
+                } else {
+                    isGiven[row][col] = true;
                 }
             }
+        }
     }
     public int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
