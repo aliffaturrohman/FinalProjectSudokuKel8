@@ -8,7 +8,8 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+import javax.swing.JLabel;
+
 /**
  * Tic-Tac-Toe: Two-player Graphics version with Simple-OO in one class
  */
