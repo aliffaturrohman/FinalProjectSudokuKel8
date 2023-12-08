@@ -34,7 +34,9 @@ public class GameBoardPanel extends JPanel {
     /** Constructor */
     public GameBoardPanel() {
         super.setLayout(new BorderLayout());
-        scorebox.setLayout(new FlowLayout(FlowLayout.RIGHT,BOARD_WIDTH/4,0));
+        setOpaque(false);
+        scorebox.setOpaque(false);
+        scorebox.setLayout(new FlowLayout(FlowLayout.RIGHT,BOARD_WIDTH/8,0));
         scorebox.add(scorelabel);
         scorebox.add(mistakeslabel);
         scorebox.add(stopwatchLabel);
@@ -74,12 +76,9 @@ public class GameBoardPanel extends JPanel {
      * Generate a new puzzle; and reset the gameboard of cells based on the puzzle.
      * You can call this method to start a new game.
      */
-    public void newGame() {
+    public void newGame(int levelGame) {
         // Generate a new puzzle
-        int levelGame = Integer.parseInt(JOptionPane.showInputDialog(this, "Select Your Level :"));
-
-
-        puzzle.newPuzzle();
+        puzzle.newPuzzle(levelGame);
 
         // Initialize all the 9x9 cells, based on the puzzle.
         for (int row = 0; row < GRID_SIZE; ++row) {
