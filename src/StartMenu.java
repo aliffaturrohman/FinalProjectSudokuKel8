@@ -17,8 +17,8 @@ public class StartMenu extends JFrame {
         JFrame frame = new JFrame("Start Menu");
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
-        frame.setSize(screenSize.width, screenSize.height);
-        frame.setUndecorated(true);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setMinimumSize(new Dimension(800,700));
 
         int buttonHeight = 75;
         int buttonWidth = 300;
@@ -28,7 +28,7 @@ public class StartMenu extends JFrame {
         ImageIcon logo = new ImageIcon("Assets/logo.png");
 
         BufferedImage bgImage = ImageIO.read(new File("Assets/backgroundimage.png"));
-        Image scaledBgImage = bgImage.getScaledInstance(frame.getWidth(), frame.getHeight(), Image.SCALE_SMOOTH);
+        Image scaledBgImage = bgImage.getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH);
         ImageIcon backgroundImage = new ImageIcon(scaledBgImage);
         JLabel background = new JLabel(backgroundImage);
         background.setIcon(backgroundImage);
