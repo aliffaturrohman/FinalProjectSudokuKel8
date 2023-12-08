@@ -31,9 +31,7 @@ public class SudokuMain {
     JMenuBar difficulty;
     JMenu diffmenu;
     JMenuItem easy, medium, hard;
-//    JButton easy = new JButton("Easy");
-//    JButton medium = new JButton("Medium");
-//    JButton hard = new JButton("Hard");
+
     // Constructor
     public SudokuMain() {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -44,7 +42,7 @@ public class SudokuMain {
 
         bgLabel.setBounds(0,0,screenWidth,screenHeight);
         container.setOpaque(false);
-        container.setBounds(screenWidth/2-350,20,700,800);
+        container.setBounds(screenWidth/2-300,20,600,650);
         frame.add(container);
         frame.add(bgLabel);
 
@@ -78,14 +76,14 @@ public class SudokuMain {
         sudokuPanel.setOpaque(false);
         container.add(sudokuPanel, BorderLayout.CENTER);
         // Add a button to the south to re-start the game via board.newGame()
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT,30,10));
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER,20,10));
         container.add(buttonPanel,BorderLayout.SOUTH);
         buttonPanel.add(btnNewGame);
         buttonPanel.add(btnSolve);
         buttonPanel.setOpaque(false);
         buttonPanel.setPreferredSize(new Dimension(700,80));
-        btnNewGame.setPreferredSize(new Dimension(200,40));
-        btnSolve.setPreferredSize(new Dimension(200,40));
+        btnNewGame.setPreferredSize(new Dimension(150,40));
+        btnSolve.setPreferredSize(new Dimension(150,40));
         btnSolve.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 board.solve();
