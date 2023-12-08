@@ -1,4 +1,5 @@
 package sudoku;
+import tictactoe.StopwatchLabel;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -6,14 +7,14 @@ import javax.swing.border.LineBorder;
 
 public class GameBoardPanel extends JPanel {
     public static final int GRID_SIZE = 9;
-    public static final int SUBGRID_SIZE = 3;
+    public int levelGame;
     private static final long serialVersionUID = 1L;  // to prevent serial warning
 
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     static int screenHeight = screenSize.height;
     int screenWidth = screenSize.width;
     // Define named constants for UI sizes
-    public static int CELL_SIZE = screenHeight/12;   // Cell width/height in pixels
+    public static int CELL_SIZE = screenHeight/14;   // Cell width/height in pixels
     public static int BOARD_WIDTH  = CELL_SIZE * GRID_SIZE;
     public static final int BOARD_HEIGHT = CELL_SIZE * GRID_SIZE;
     // Board width/height in pixels
@@ -23,16 +24,32 @@ public class GameBoardPanel extends JPanel {
     private Cell[][] cells = new Cell[GRID_SIZE][GRID_SIZE];
     /** It also contains a Puzzle with array numbers and isGiven */
     private Puzzle puzzle = new Puzzle();
-
+    private int score=0;
+    private int mistake=0;
+    JPanel sudokugrid = new JPanel();
+    JLabel scorelabel = new JLabel("Score: "+score);
+    JLabel mistakeslabel = new JLabel("Mistakes: "+mistake+"/9");
+    StopwatchLabel stopwatchLabel = new StopwatchLabel();
+    JPanel scorebox = new JPanel();
     /** Constructor */
     public GameBoardPanel() {
+        super.setLayout(new BorderLayout());
+        scorebox.setLayout(new FlowLayout(FlowLayout.RIGHT,BOARD_WIDTH/4,0));
+        scorebox.add(scorelabel);
+        scorebox.add(mistakeslabel);
+        scorebox.add(stopwatchLabel);
+        scorebox.setPreferredSize(new Dimension(BOARD_WIDTH,50));
+        super.add(sudokugrid, BorderLayout.CENTER);
+        super.add(scorebox, BorderLayout.NORTH);
+        scorelabel.setFont(new Font("Arial",Font.PLAIN,25));
+        mistakeslabel.setFont(new Font("Arial",Font.PLAIN,25));
+        sudokugrid.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));  // JPanel
 
-        super.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));  // JPanel
         // Allocate the 2D array of Cell, and added into JPanel.
         for (int row = 0; row < GRID_SIZE; ++row) {
             for (int col = 0; col < GRID_SIZE; ++col) {
                 cells[row][col] = new Cell(row, col);
-                super.add(cells[row][col]);   // JPanel
+                sudokugrid.add(cells[row][col]);   // JPanel
             }
         }
 
@@ -59,6 +76,9 @@ public class GameBoardPanel extends JPanel {
      */
     public void newGame() {
         // Generate a new puzzle
+        int levelGame = Integer.parseInt(JOptionPane.showInputDialog(this, "Select Your Level :"));
+
+
         puzzle.newPuzzle();
 
         // Initialize all the 9x9 cells, based on the puzzle.
@@ -68,6 +88,7 @@ public class GameBoardPanel extends JPanel {
             }
         }
     }
+
 
     /**
      * Return true if the puzzle is solved
@@ -106,17 +127,32 @@ private class CellInputListener implements ActionListener {
         if (numberIn == sourceCell.number) {
            sourceCell.status = true;
            sourceCell.painttrue();
+           score+=100;
         } else {
            sourceCell.paintfalse();
+           mistake+=1;
         }
+        scorelabel.setText("Score: "+score);
+        mistakeslabel.setText("Mistakes: "+mistake+"/9");
         /*
          * [TODO 6] (later)
          * Check if the player has solved the puzzle after this move,
          *   by calling isSolved(). Put up a congratulation JOptionPane, if so.
          */
         if(isSolved()){
-        JOptionPane.showMessageDialog(null, "congratulation");
+        JOptionPane.showMessageDialog(null, "Congratulation");
+        if (mistake>=9){
+            JOptionPane.showMessageDialog(null,"You Failed");
+            solve();
+        }
     }
+    }
+}
+public void solve(){
+    for (int row = 0; row < GRID_SIZE; ++row) {
+        for (int col = 0; col < GRID_SIZE; ++col) {
+            cells[row][col].newGame(puzzle.numbers[row][col], true);
+        }
     }
 }
 }
