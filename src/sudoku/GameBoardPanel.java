@@ -36,7 +36,7 @@ public class GameBoardPanel extends JPanel {
         super.setLayout(new BorderLayout());
         setOpaque(false);
         scorebox.setOpaque(false);
-        scorebox.setLayout(new FlowLayout(FlowLayout.RIGHT,45,0));
+        scorebox.setLayout(new FlowLayout(FlowLayout.CENTER,20,0));
         scorebox.add(Difficultylabel);
         scorebox.add(stopwatchLabel);
         scorebox.add(mistakeslabel);
