@@ -18,7 +18,6 @@ public class SudokuMain {
     int screenWidth = screenSize.width;
 
     // private variables
-    private String BACKGROUND_IMAGE_URL = "Assets/bgtictactoe.jpg";
     JFrame frame = new JFrame();
     GameBoardPanel board = new GameBoardPanel();
     JPanel sudokuPanel = new JPanel();
