@@ -21,86 +21,73 @@ public class Puzzle {
     // This method shall set (or update) the arrays numbers and isGiven
 
     public void newPuzzle(int levelGame) {
-        // I hardcode a puzzle here for illustration and testing.
-        int[][] hardcodedNumbers =
-                {{5, 3, 4, 6, 7, 8, 9, 1, 2},
-                        {6, 7, 2, 1, 9, 5, 3, 4, 8},
-                        {1, 9, 8, 3, 4, 2, 5, 6, 7},
-                        {8, 5, 9, 7, 6, 1, 4, 2, 3},
-                        {4, 2, 6, 8, 5, 3, 7, 9, 1},
-                        {7, 1, 3, 9, 2, 4, 8, 5, 6},
-                        {9, 6, 1, 5, 3, 7, 2, 8, 4},
-                        {2, 8, 7, 4, 1, 9, 6, 3, 5},
-                        {3, 4, 5, 2, 8, 6, 1, 7, 9}};
-
-        // swap number from hardcodednumbers
-        int swap = 10; //swap antar angka sebanyak 3 kali
-        for (int i=0;i<swap;i++) {
-            int targetswap1 = getRandomNumber(1,9);
-            int targetswap2 = getRandomNumber(1,9);
-            for (int row = 0; row < GRID_SIZE; ++row) {
-                for (int col = 0; col < GRID_SIZE; ++col) {
-                    if (hardcodedNumbers[row][col]==targetswap1){numbers[row][col]=targetswap2;}
-                    else if (hardcodedNumbers[row][col]==targetswap2){numbers[row][col]=targetswap1;}
-                    else {numbers[row][col]=hardcodedNumbers[row][col];}
-                }
-            }
-            hardcodedNumbers=numbers;
-            //hardcodedNumbers diperbarui agar swap angka berikutnya sesuai dengan numbers yang baru
-        }
-
-        int falselimit = 0;
-        int rowcolfalselimit=0;
+        numbers = new int[GRID_SIZE][GRID_SIZE];
+        int givenlimit = 0;
+        int rowcolgivenlimit=0;
         if (levelGame==1){
-            falselimit = getRandomNumber(35,40);
-            rowcolfalselimit = 4;
+            givenlimit = getRandomNumber(50,5);
+            rowcolgivenlimit = 8;
         }
         else if (levelGame==2){
-            falselimit = getRandomNumber(45,50);
-            rowcolfalselimit = 6;
+            givenlimit = getRandomNumber(35,10);
+            rowcolgivenlimit = 6;
         }
         else if (levelGame==3){
-            falselimit = getRandomNumber(55,60);
-            rowcolfalselimit = 7;
+            givenlimit = getRandomNumber(20,5);
+            rowcolgivenlimit = 4;
         }
-        int falsecount = 0;
+        int givencount = 0;
         int[] columnlimit = new int[9];
         int[] rowlimit = new int[9];
-
-        //array boolean secara default menyimpan false
-        //set array boolean menjadi true
-
-            for (int row=0;row<GRID_SIZE;row++){
-                for (int col=0;col<GRID_SIZE;col++){
-                    int randomnumber = getRandomNumber(1,2);
-                    if (randomnumber==1 && falsecount<falselimit && columnlimit[col]<rowcolfalselimit && rowlimit[row]<rowcolfalselimit) {
-                        isGiven[row][col] = false;
-                        falsecount+=1;
-                        columnlimit[col]+=1;
-                        rowlimit[row]+=1;
-                    } else {
-                        isGiven[row][col] = true;
-                        }
+        System.out.println(givenlimit);
+        while (givencount<givenlimit){
+            int ranrow= getRandomNumber(0,9);
+            int rancol = getRandomNumber(0,9);
+            int ranvalue = getRandomNumber(1,9);
+            if (numbers[ranrow][rancol]==0){
+                if(validValue(ranrow,rancol,ranvalue)){
+                    if (columnlimit[rancol]<=rowcolgivenlimit && rowlimit[ranrow]<=rowcolgivenlimit) {
+                        numbers[ranrow][rancol] = ranvalue;
+                        givencount += 1;
                     }
-            }
-            if (falsecount<falselimit){
-                for (int row=GRID_SIZE-1;row>0;row--){
-                        for (int col=GRID_SIZE-1;col>0;col--){
-                            int randomnumber = getRandomNumber(1,2);
-                            if (randomnumber==1 && falsecount<falselimit && columnlimit[col]<rowcolfalselimit && rowlimit[row]<rowcolfalselimit) {
-                                isGiven[row][col] = false;
-                                falsecount+=1;
-                                columnlimit[col]+=1;
-                                rowlimit[row]+=1;
-                            }
-                        }
                 }
             }
+        }
+        for (int i=0;i<9;i++){
+            for (int j=0;j<9;j++){
+                if (numbers[i][j]==0)isGiven[i][j] = false;
+                else isGiven[i][j]=true;}
+        }
     }
     public int getRandomNumber(int min, int max) {
         Random random = new Random();
         int randnum = random.nextInt(max)+min;
         return randnum;
     }
-
+    public boolean validValue(int row, int col, int value) {
+        boolean valid = true;
+        for (int i=0;i<GRID_SIZE;i++){
+            if (numbers[i][col]==value) {
+                valid=false;
+                break;
+            }
+        }
+        for (int i=0;i<GRID_SIZE;i++){
+            if (numbers[row][i]==value) {
+                valid = false;
+                break;
+            }
+        }
+        int subgridrow = row/3;
+        int subgridcol = col/3;
+        for (int i=0;i<SUBGRID_SIZE;i++){
+            for (int j=0;j<SUBGRID_SIZE;j++){
+                if (numbers[subgridrow+i][subgridcol+1]==value){
+                    valid=false;
+                    break;
+                }
+            }
+        }
+        return valid;
+    }
 }
