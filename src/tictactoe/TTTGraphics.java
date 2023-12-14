@@ -28,7 +28,7 @@ public class TTTGraphics extends JFrame {
     public static final int CELL_PADDING = CELL_SIZE / 5;
     public static final int SYMBOL_SIZE = CELL_SIZE - CELL_PADDING * 2; // width/height
     public static final int SYMBOL_STROKE_WIDTH = 8; // pen's stroke width
-//    public static final Color COLOR_BG = Color.WHITE;  // background
+    public static final Color COLOR_BG = new Color(197, 49, 49);  // background
     public static final Color COLOR_BG_STATUS = new Color(216, 216, 216);
     public static final Color COLOR_GRID   = new Color(34, 152, 23);  // grid lines
 //    public static final Color COLOR_CROSS  = new Color(211, 45, 65);  // Red #D32D41
@@ -66,22 +66,33 @@ public class TTTGraphics extends JFrame {
         gamePanel = new GamePanel();  // Construct a drawing canvas (a JPanel)
         gamePanel.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
 
-        setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().width - gamePanel.getHeight())/ 3.2) , (Toolkit.getDefaultToolkit().getScreenSize().height - gamePanel.getHeight()) / 8);
+//        setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().width - gamePanel.getHeight())/ 3.2) , (Toolkit.getDefaultToolkit().getScreenSize().height - gamePanel.getHeight()) / 8);
+        // Set the size of the frame
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int frameWidth = (int) (screenSize.width);
+        int frameHeight = (int) (screenSize.height);
+        setSize(frameWidth, frameHeight);
 
+        setLocationRelativeTo(null);
 //        setUndecorated(true);
         // The canvas (JPanel) fires a MouseEvent upon mouse-click
         gamePanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {  // mouse-clicked handler
-                int mouseX = e.getX();
-                int mouseY = e.getY();
-                // Get the row and column clicked
+                // Calculate the starting position of the grid to center it
+                int startX = (getWidth() - BOARD_WIDTH) / 2;
+                int startY = (getHeight() - BOARD_HEIGHT) / 2;
+
+                // Adjust mouse coordinates based on the grid's starting position
+                int mouseX = e.getX() - startX;
+                int mouseY = e.getY() - startY;
+
+                // Calculate the row and column based on the adjusted mouse coordinates
                 int row = mouseY / CELL_SIZE;
                 int col = mouseX / CELL_SIZE;
 
                 if (currentState == State.PLAYING) {
-                    if (row >= 0 && row < ROWS && col >= 0
-                            && col < COLS && board[row][col] == Seed.NO_SEED) {
+                    if (row >= 0 && row < ROWS && col >= 0 && col < COLS && board[row][col] == Seed.NO_SEED) {
                         // Update board[][] and return the new game state after the move
                         currentState = stepGame(currentPlayer, row, col);
                         // Switch player
@@ -91,7 +102,7 @@ public class TTTGraphics extends JFrame {
                     newGame(); // restart the game
                 }
                 // Refresh the drawing canvas
-                repaint();  // Callback paintComponent().
+                gamePanel.repaint();  // Callback paintComponent().
             }
         });
 
@@ -108,8 +119,7 @@ public class TTTGraphics extends JFrame {
         cp.add(gamePanel, BorderLayout.CENTER);
         cp.add(statusBar, BorderLayout.PAGE_END); // same as SOUTH
 
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        pack();  // pack all the components in this JFrame
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Tic Tac Toe");
         setVisible(true);  // show this JFrame
 
@@ -184,11 +194,11 @@ public class TTTGraphics extends JFrame {
         @Override
         public void paintComponent(Graphics g) {  // Callback via repaint()
             super.paintComponent(g);
-//            setBackground(COLOR_BG);  // set its background color
+           setBackground(COLOR_BG);  // set its background color
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             Image X_IMAGE = toolkit.getImage(X_IMAGE_URL);
             Image O_IMAGE = toolkit.getImage(O_IMAGE_URL);
-            Image BACKGROUND_IMAGE = toolkit.getImage(BACKGROUND_IMAGE_URL);
+//          Image BACKGROUND_IMAGE = toolkit.getImage(BACKGROUND_IMAGE_URL);
 
             BufferedImage bgImage = null;
             try {
@@ -196,22 +206,29 @@ public class TTTGraphics extends JFrame {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            Image scaledBgImage = bgImage.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+            Image scaledBgImage = bgImage.getScaledInstance(BOARD_WIDTH, BOARD_HEIGHT, Image.SCALE_SMOOTH);
+
+            // Calculate the starting position of the background image to center it
+            int startx = (getWidth() - BOARD_WIDTH) / 2;
+            int starty = (getHeight() - BOARD_HEIGHT) / 2;
+
+            g.drawImage(scaledBgImage, startx, starty, BOARD_WIDTH, BOARD_HEIGHT, null);
 
 
-            setBackground(Color.WHITE);  // set its background color
-            // Draw the background image
-            g.drawImage(scaledBgImage, 0, 0, BOARD_WIDTH, BOARD_HEIGHT, null);
             // Draw the grid lines
             g.setColor(COLOR_GRID);
             // Draw the grid lines
             g.setColor(COLOR_GRID);
+            int startX = (getWidth() - BOARD_WIDTH) / 2;
+            int startY = (getHeight() - BOARD_HEIGHT) / 2;
+
             for (int row = 1; row < ROWS; ++row) {
-                g.fillRoundRect(0, CELL_SIZE * row - GRID_WIDHT_HALF,
+                g.fillRoundRect(startX, startY + CELL_SIZE * row - GRID_WIDHT_HALF,
                         BOARD_WIDTH - 1, GRID_WIDTH, GRID_WIDTH, GRID_WIDTH);
             }
+
             for (int col = 1; col < COLS; ++col) {
-                g.fillRoundRect(CELL_SIZE * col - GRID_WIDHT_HALF, 0,
+                g.fillRoundRect(startX + CELL_SIZE * col - GRID_WIDHT_HALF, startY,
                         GRID_WIDTH, BOARD_HEIGHT - 1, GRID_WIDTH, GRID_WIDTH);
             }
 
@@ -219,16 +236,25 @@ public class TTTGraphics extends JFrame {
 
             // Use Graphics2D which allows us to set the pen's stroke
             Graphics2D g2d = (Graphics2D) g;
-            g2d.setStroke(new BasicStroke(SYMBOL_STROKE_WIDTH,
-                    BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g2d.setStroke(new BasicStroke(SYMBOL_STROKE_WIDTH, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+
             for (int row = 0; row < ROWS; ++row) {
                 for (int col = 0; col < COLS; ++col) {
                     int x1 = col * CELL_SIZE + CELL_PADDING;
                     int y1 = row * CELL_SIZE + CELL_PADDING;
+
+                    // Calculate the center position of the cell
+                    int centerX = x1 + SYMBOL_SIZE / 2;
+                    int centerY = y1 + SYMBOL_SIZE / 2;
+
                     if (board[row][col] == Seed.CROSS) {
-                        g2d.drawImage(X_IMAGE, x1, y1, SYMBOL_SIZE, SYMBOL_SIZE, null);
+                        int imageX = centerX - SYMBOL_SIZE / 2;
+                        int imageY = centerY - SYMBOL_SIZE / 2;
+                        g2d.drawImage(X_IMAGE, imageX, imageY, SYMBOL_SIZE, SYMBOL_SIZE, null);
                     } else if (board[row][col] == Seed.NOUGHT) {
-                        g2d.drawImage(O_IMAGE, x1, y1, SYMBOL_SIZE, SYMBOL_SIZE, null);
+                        int imageX = centerX - SYMBOL_SIZE / 2;
+                        int imageY = centerY - SYMBOL_SIZE / 2;
+                        g2d.drawImage(O_IMAGE, imageX, imageY, SYMBOL_SIZE, SYMBOL_SIZE, null);
                     }
                 }
             }
@@ -247,8 +273,8 @@ public class TTTGraphics extends JFrame {
                 statusBar.setForeground(Color.RED);
                 statusBar.setText("'Monkey' Won! Click to play again");
             }
-            int imageX = BOARD_WIDTH + 20;  // Sesuaikan posisi X gambar
-            int imageY = 20;  // Sesuaikan posisi Y gambar
+            int imageX = startX + BOARD_WIDTH + 20;  // Sesuaikan posisi X gambar
+            int imageY = startY + 20;  // Sesuaikan posisi Y gambar
             Image yourImage = (currentPlayer == Seed.CROSS) ? X_IMAGE : O_IMAGE;
             int imageWidth = SYMBOL_SIZE;  // Sesuaikan dengan ukuran gambar yang diinginkan
             int imageHeight = SYMBOL_SIZE; // Sesuaikan dengan ukuran gambar yang diinginkan
