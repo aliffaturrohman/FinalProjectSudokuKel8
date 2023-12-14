@@ -14,12 +14,12 @@ public class StopwatchLabel extends JLabel {
     public StopwatchLabel() {
         setFont(new Font("Arial", Font.PLAIN, 24));
         setForeground(Color.BLACK);
-        timer.start();
         timer = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 updateTime();
             }
         });
+        timer.start();
     }
 
     public void updateTime() {
