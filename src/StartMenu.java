@@ -15,9 +15,10 @@ public class StartMenu extends JFrame {
     public static void main(String[] args) throws IOException {
 
         JFrame frame = new JFrame("Start Menu");
-
-        frame.setSize(800,600);
-        frame.setUndecorated(false);
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setMinimumSize(new Dimension(800,700));
 
         int buttonHeight = 75;
         int buttonWidth = 300;
@@ -27,7 +28,7 @@ public class StartMenu extends JFrame {
         ImageIcon logo = new ImageIcon("Assets/logo.png");
 
         BufferedImage bgImage = ImageIO.read(new File("Assets/backgroundimage.png"));
-        Image scaledBgImage = bgImage.getScaledInstance(frame.getWidth(), frame.getHeight(), Image.SCALE_SMOOTH);
+        Image scaledBgImage = bgImage.getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_SMOOTH);
         ImageIcon backgroundImage = new ImageIcon(scaledBgImage);
         JLabel background = new JLabel(backgroundImage);
         background.setIcon(backgroundImage);
@@ -52,6 +53,8 @@ public class StartMenu extends JFrame {
 
 
         exitButton.setBackground(new Color(220,53,69));
+        exitButton.setFont(new Font("Arial",Font.PLAIN,20));
+        exitButton.setBorderPainted(false);
         exitButton.setForeground(Color.WHITE);
         sudokuButton.addMouseListener(new MouseAdapter() {
             @Override

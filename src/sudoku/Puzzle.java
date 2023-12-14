@@ -1,5 +1,7 @@
 package sudoku;
 
+import java.util.Random;
+
 public class Puzzle {
     // All variables have package access
     // The numbers on the puzzle
@@ -8,7 +10,6 @@ public class Puzzle {
     int[][] numbers = new int[GRID_SIZE][GRID_SIZE];
     // The clues - isGiven (no need to guess) or need to guess
     boolean[][] isGiven = new boolean[GRID_SIZE][GRID_SIZE];
-
     // Constructor
     public Puzzle() {
         super();
@@ -19,55 +20,73 @@ public class Puzzle {
     // This method shall set (or update) the arrays numbers and isGiven
 
     public void newPuzzle(int levelGame) {
-        // I hardcode a puzzle here for illustration and testing.
-        int[][] hardcodedNumbers =
-                {{5, 3, 4, 6, 7, 8, 9, 1, 2},
-                        {6, 7, 2, 1, 9, 5, 3, 4, 8},
-                        {1, 9, 8, 3, 4, 2, 5, 6, 7},
-                        {8, 5, 9, 7, 6, 1, 4, 2, 3},
-                        {4, 2, 6, 8, 5, 3, 7, 9, 1},
-                        {7, 1, 3, 9, 2, 4, 8, 5, 6},
-                        {9, 6, 1, 5, 3, 7, 2, 8, 4},
-                        {2, 8, 7, 4, 1, 9, 6, 3, 5},
-                        {3, 4, 5, 2, 8, 6, 1, 7, 9}};
-
-        // Copy from hardcodedNumbers into the array "numbers"
-        for (int row = 0; row < GRID_SIZE; ++row) {
-            for (int col = 0; col < GRID_SIZE; ++col) {
-                numbers[row][col] = hardcodedNumbers[row][col];
-            }
-        }
-
-        // Need to use input parameter cellsToGuess!
-        // Hardcoded for testing, only 2 cells of "8" is NOT GIVEN
-
-
-        int levelselected = 0;
+        numbers = new int[GRID_SIZE][GRID_SIZE];
+        int givenlimit = 0;
+        int rowcolgivenlimit=0;
         if (levelGame==1){
-        levelselected = getRandomNumber(28 , 35);}
+            givenlimit = getRandomNumber(50,5);
+            rowcolgivenlimit = 8;
+        }
         else if (levelGame==2){
-            levelselected = getRandomNumber(35,50);
+            givenlimit = getRandomNumber(35,10);
+            rowcolgivenlimit = 6;
         }
         else if (levelGame==3){
-            levelselected = getRandomNumber(50,65);
+            givenlimit = getRandomNumber(20,5);
+            rowcolgivenlimit = 4;
         }
-        int falselimit = 0;
-        for (int row = 0; row < GRID_SIZE; ++row) {
-            int rowfalselimit = 0;
-            for (int col = 0; col < GRID_SIZE; ++col) {
-                int remove = getRandomNumber(0,3);
-                if (remove == 0 && falselimit < levelselected && rowfalselimit < 6) {
-                    isGiven[row][col] = false;
-                    falselimit = falselimit + 1;
-                    rowfalselimit = rowfalselimit + 1;
-                } else {
-                    isGiven[row][col] = true;
+        int givencount = 0;
+        int[] columnlimit = new int[9];
+        int[] rowlimit = new int[9];
+        System.out.println(givenlimit);
+        while (givencount<givenlimit){
+            int ranrow= getRandomNumber(0,9);
+            int rancol = getRandomNumber(0,9);
+            int ranvalue = getRandomNumber(1,9);
+            if (numbers[ranrow][rancol]==0){
+                if(validValue(ranrow,rancol,ranvalue)){
+                    if (columnlimit[rancol]<=rowcolgivenlimit && rowlimit[ranrow]<=rowcolgivenlimit) {
+                        numbers[ranrow][rancol] = ranvalue;
+                        givencount += 1;
+                    }
                 }
             }
         }
+        for (int i=0;i<9;i++){
+            for (int j=0;j<9;j++){
+                if (numbers[i][j]==0)isGiven[i][j] = false;
+                else isGiven[i][j]=true;}
+        }
     }
     public int getRandomNumber(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
+        Random random = new Random();
+        int randnum = random.nextInt(max)+min;
+        return randnum;
     }
-
+    public boolean validValue(int row, int col, int value) {
+        boolean valid = true;
+        for (int i=0;i<GRID_SIZE;i++){
+            if (numbers[i][col]==value) {
+                valid=false;
+                break;
+            }
+        }
+        for (int i=0;i<GRID_SIZE;i++){
+            if (numbers[row][i]==value) {
+                valid = false;
+                break;
+            }
+        }
+        int subgridrow = row/3;
+        int subgridcol = col/3;
+        for (int i=0;i<SUBGRID_SIZE;i++){
+            for (int j=0;j<SUBGRID_SIZE;j++){
+                if (numbers[subgridrow+i][subgridcol+1]==value){
+                    valid=false;
+                    break;
+                }
+            }
+        }
+        return valid;
+    }
 }

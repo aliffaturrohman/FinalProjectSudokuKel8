@@ -28,10 +28,10 @@ public class TTTGraphics extends JFrame {
     public static final int CELL_PADDING = CELL_SIZE / 5;
     public static final int SYMBOL_SIZE = CELL_SIZE - CELL_PADDING * 2; // width/height
     public static final int SYMBOL_STROKE_WIDTH = 8; // pen's stroke width
-    //    public static final Color COLOR_BG = Color.WHITE;  // background
+//    public static final Color COLOR_BG = Color.WHITE;  // background
     public static final Color COLOR_BG_STATUS = new Color(216, 216, 216);
     public static final Color COLOR_GRID   = new Color(34, 152, 23);  // grid lines
-    //    public static final Color COLOR_CROSS  = new Color(211, 45, 65);  // Red #D32D41
+//    public static final Color COLOR_CROSS  = new Color(211, 45, 65);  // Red #D32D41
 //    public static final Color COLOR_NOUGHT = new Color(76, 181, 245); // Blue #4CB5F5
     public static final Font FONT_STATUS = new Font("OCR A Extended", Font.PLAIN, 14);
 
@@ -54,19 +54,21 @@ public class TTTGraphics extends JFrame {
     // UI Components
     private GamePanel gamePanel; // Drawing canvas (JPanel) for the game board
     private JLabel statusBar;  // Status Bar
+    private ImageIcon logo;
 
     /** Constructor to setup the game and the GUI components */
     public TTTGraphics() {
         // Initialize the game objects
         initGame();
-
+        logo = new ImageIcon("Assets/logo.png");
+        setIconImage(logo.getImage());
         // Set up GUI components
         gamePanel = new GamePanel();  // Construct a drawing canvas (a JPanel)
         gamePanel.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
 
-//        setUndecorated(true);
-
         setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().width - gamePanel.getHeight())/ 3.2) , (Toolkit.getDefaultToolkit().getScreenSize().height - gamePanel.getHeight()) / 8);
+
+//        setUndecorated(true);
         // The canvas (JPanel) fires a MouseEvent upon mouse-click
         gamePanel.addMouseListener(new MouseAdapter() {
             @Override

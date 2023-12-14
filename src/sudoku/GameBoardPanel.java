@@ -7,7 +7,7 @@ import javax.swing.border.LineBorder;
 
 public class GameBoardPanel extends JPanel {
     public static final int GRID_SIZE = 9;
-    public int levelGame;
+    public static final int SUBGRID_SIZE = 3;
     private static final long serialVersionUID = 1L;  // to prevent serial warning
 
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -47,19 +47,30 @@ public class GameBoardPanel extends JPanel {
         mistakeslabel.setFont(new Font("Arial",Font.PLAIN,25));
         sudokugrid.setPreferredSize(new Dimension(BOARD_WIDTH,BOARD_HEIGHT));
         sudokugrid.setBorder(new LineBorder(Color.black,4));
-        sudokugrid.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));  // JPanel
+        sudokugrid.setLayout(new GridLayout(SUBGRID_SIZE, SUBGRID_SIZE));  // JPanel
 
         // Allocate the 2D array of Cell, and added into JPanel.
-        for (int row = 0; row < GRID_SIZE; ++row) {
-            for (int col = 0; col < GRID_SIZE; ++col) {
-                cells[row][col] = new Cell(row, col);
-                sudokugrid.add(cells[row][col]);   // JPanel
+        for (int row = 0; row < SUBGRID_SIZE; row++) {
+            for (int col = 0; col < SUBGRID_SIZE; col++) {
+                JPanel subgridpanel = new JPanel();
+                subgridpanel.setLayout(new GridLayout(SUBGRID_SIZE, SUBGRID_SIZE));
+                subgridpanel.setBorder(new LineBorder(Color.black,2));
+                for (int i=0; i < SUBGRID_SIZE; i++) {
+                    for (int j=0; j < SUBGRID_SIZE; j++) {
+                        cells[row*3+i][col*3+j] = new Cell(row*3+i, col*3+j);
+                        subgridpanel.add(cells[row*3+i][col*3+j]);
+                    }
+                }
+                sudokugrid.add(subgridpanel);
             }
         }
 
         // [TODO 3] Allocate a common listener as the ActionEvent listener for all the
         //  Cells (JTextFields)
+
+
         CellInputListener listener = new CellInputListener();
+
 
 
         // [TODO 4] Adds this common listener to all editable cells
@@ -125,6 +136,7 @@ private class CellInputListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Get a reference of the JTextField that triggers this action event
         Cell sourceCell = (Cell)e.getSource();
+
 
         // Retrieve the int entered
         int numberIn = Integer.parseInt(sourceCell.getText());

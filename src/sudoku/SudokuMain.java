@@ -1,11 +1,7 @@
 package sudoku;
 import java.awt.*;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * The main Sudoku program
@@ -18,7 +14,6 @@ public class SudokuMain {
     int screenWidth = screenSize.width;
 
     // private variables
-    private String BACKGROUND_IMAGE_URL = "Assets/bgtictactoe.jpg";
     JFrame frame = new JFrame();
     GameBoardPanel board = new GameBoardPanel();
     JPanel sudokuPanel = new JPanel();
@@ -26,6 +21,7 @@ public class SudokuMain {
     JPanel buttonPanel = new JPanel();
     JButton btnSolve = new JButton("Solve");
     private ImageIcon bgsudoku;
+    private ImageIcon logo;
     private JLabel bgLabel;
     JPanel container = new JPanel();
     JMenuBar difficulty;
@@ -37,6 +33,7 @@ public class SudokuMain {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLayout(null);
 
+        logo = new ImageIcon("Assets/logo.png");
         bgsudoku = new ImageIcon("Assets/bgsudoku.jpg");
         bgLabel = new JLabel(bgsudoku);
 
@@ -45,6 +42,7 @@ public class SudokuMain {
         container.setBounds(screenWidth/2-300,20,600,650);
         frame.add(container);
         frame.add(bgLabel);
+        frame.setIconImage(logo.getImage());
 
         difficulty = new JMenuBar();
 
