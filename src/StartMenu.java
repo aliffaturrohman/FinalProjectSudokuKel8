@@ -14,7 +14,7 @@ public class StartMenu extends JFrame {
 
     public static void main(String[] args) throws Exception {
 
-        JFrame frame = new JFrame("Tictactoe and Sudoku 8");
+        JFrame frame = new JFrame("Sudoku and Tictactoe");
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

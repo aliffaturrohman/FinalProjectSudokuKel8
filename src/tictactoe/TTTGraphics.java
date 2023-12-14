@@ -153,7 +153,7 @@ public class TTTGraphics extends JFrame {
         cp.add(gamePanel, BorderLayout.CENTER);
         cp.add(statusBar, BorderLayout.PAGE_END); // same as SOUTH
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setTitle("Tic Tac Toe");
         setVisible(true);  // show this JFrame
 
