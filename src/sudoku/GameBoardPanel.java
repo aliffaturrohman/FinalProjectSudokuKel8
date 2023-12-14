@@ -90,6 +90,7 @@ public class GameBoardPanel extends JPanel {
      * You can call this method to start a new game.
      */
     public void newGame(int levelGame) {
+        stopwatchLabel.resetTimer();
         // Generate a new puzzle
         puzzle.newPuzzle(levelGame);
         if (levelGame==1){
@@ -101,7 +102,6 @@ public class GameBoardPanel extends JPanel {
         else if (levelGame==3){
             diff="Hard";
         }
-        stopwatchLabel.startTime = System.currentTimeMillis();
         Difficultylabel.setText("Difficulty: "+diff);
         mistake=0;
         mistakeslabel.setText("Mistakes: "+mistake+"/9");
@@ -164,13 +164,16 @@ private class CellInputListener implements ActionListener {
          *   by calling isSolved(). Put up a congratulation JOptionPane, if so.
          */
         if(isSolved()) {
+            stopwatchLabel.stopTimer();
             JOptionPane.showMessageDialog(null, "Congratulation");
         }
         if (mistake>=9) {
+            stopwatchLabel.stopTimer();
             JOptionPane.showMessageDialog(null, "You Failed");
             solve();
         }
     }
+
 }
 public void solve(){
     for (int row = 0; row < GRID_SIZE; ++row) {

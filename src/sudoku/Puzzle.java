@@ -1,6 +1,7 @@
 package sudoku;
 
 import java.util.Random;
+import java.util.Stack;
 
 public class Puzzle {
     // All variables have package access
@@ -8,6 +9,7 @@ public class Puzzle {
     public static final int GRID_SIZE = 9;
     public static final int SUBGRID_SIZE = 3;
     int[][] numbers = new int[GRID_SIZE][GRID_SIZE];
+    Cell[][] puzzleCell = new Cell[GRID_SIZE][GRID_SIZE];
     // The clues - isGiven (no need to guess) or need to guess
     boolean[][] isGiven = new boolean[GRID_SIZE][GRID_SIZE];
     // Constructor
@@ -21,6 +23,32 @@ public class Puzzle {
 
     public void newPuzzle(int levelGame) {
         numbers = new int[GRID_SIZE][GRID_SIZE];
+            //sudoku generator initial value
+            int initialvalue = 10;
+            int initialcount = 0;
+            do {
+                for (int i=0;i<GRID_SIZE;i++){
+                    for (int j=0;j<GRID_SIZE;j++){
+                        numbers[i][j]=0;
+                        puzzleCell[i][j]= new Cell(i,j,numbers[i][j]);
+                        isGiven[i][j] = false;
+                    }
+                }
+                while (initialcount < initialvalue) {
+                    int ranrow = getRandomNumber(0, 9);
+                    int rancol = getRandomNumber(0, 9);
+                    int ranvalue = getRandomNumber(1, 9);
+                    if (numbers[ranrow][rancol] == 0) {
+                        if (validValue(ranrow, rancol, ranvalue)) {
+                            numbers[ranrow][rancol] = ranvalue;
+                            initialcount += 1;
+                            Cell temp = new Cell(ranrow, rancol,numbers[ranrow][rancol]);
+                            temp.islocked = true;
+                            puzzleCell[ranrow][rancol] = temp;
+                        }
+                    }
+                }
+            } while (!solve());
         int givenlimit = 0;
         int rowcolgivenlimit=0;
         if (levelGame==1){
@@ -38,24 +66,19 @@ public class Puzzle {
         int givencount = 0;
         int[] columnlimit = new int[9];
         int[] rowlimit = new int[9];
-        System.out.println(givenlimit);
+        int counter=0;
         while (givencount<givenlimit){
-            int ranrow= getRandomNumber(0,9);
-            int rancol = getRandomNumber(0,9);
-            int ranvalue = getRandomNumber(1,9);
-            if (numbers[ranrow][rancol]==0){
-                if(validValue(ranrow,rancol,ranvalue)){
-                    if (columnlimit[rancol]<=rowcolgivenlimit && rowlimit[ranrow]<=rowcolgivenlimit) {
-                        numbers[ranrow][rancol] = ranvalue;
-                        givencount += 1;
-                    }
+            System.out.println(givencount);
+            int randomrow = getRandomNumber(0,9);
+            int randomcol = getRandomNumber(0,9);
+            if (isGiven[randomrow][randomcol]==false){
+                if (columnlimit[randomcol]<rowcolgivenlimit && rowlimit[randomrow]<rowcolgivenlimit){
+                    isGiven[randomrow][randomcol]=true;
+                    columnlimit[randomcol]+=1;
+                    rowlimit[randomrow]+=1;
+                    givencount+=1;
                 }
             }
-        }
-        for (int i=0;i<9;i++){
-            for (int j=0;j<9;j++){
-                if (numbers[i][j]==0)isGiven[i][j] = false;
-                else isGiven[i][j]=true;}
         }
     }
     public int getRandomNumber(int min, int max) {
@@ -77,16 +100,85 @@ public class Puzzle {
                 break;
             }
         }
-        int subgridrow = row/3;
-        int subgridcol = col/3;
+        int subgridrow = row-row%3;
+        int subgridcol = col-col%3;
         for (int i=0;i<SUBGRID_SIZE;i++){
             for (int j=0;j<SUBGRID_SIZE;j++){
-                if (numbers[subgridrow+i][subgridcol+1]==value){
+                if (numbers[subgridrow+i][subgridcol+j]==value){
                     valid=false;
                     break;
                 }
             }
         }
         return valid;
+    }
+    public boolean solve(){
+        Stack<Cell> stack = new Stack<>();
+        int curRow = 0;
+        int curCol = 0;
+        int curValue =1;
+        int time = 0 ;
+        while(stack.size() < 81){
+            time++;
+            if(puzzleCell[curRow][curCol].islocked){
+                Cell lockedCell = puzzleCell[curRow][curCol];
+                stack.push(lockedCell);
+                curCol+=1;
+                if (curCol>=9){
+                    curRow+=1;
+                    curCol=0;
+                }
+                continue;
+            }
+            for (;curValue <= 10 ; curValue++){
+                if (validValue(curRow, curCol, curValue)){
+                    break;
+                }
+            }
+            if(curValue <= 9){
+                Cell cell = new Cell(curRow, curCol, curValue);
+                numbers[curRow][curCol] = curValue;
+                stack.push(cell);
+                curCol+=1;
+                if (curCol>=9){
+                    curRow+=1;
+                    curCol=0;
+                }
+                curValue = 1;
+            }else{
+                System.out.println("cek2 "+time);
+                if (stack.size() > 0) {
+                    // Assign to a Cell variable the top of the stack (stack.pop())
+                    Cell cell = stack.pop();
+                    // while the Cell is locked
+                    while (cell.islocked) {
+                        // if stack size is greater than 0
+                        if (stack.size() > 0) {
+                            // assign to the Cell variable the top of the stack (i.e. pop)
+                            cell = stack.pop();
+                        } else {
+                            // print out the number of steps (time)
+                            // return false (no solution found)
+                            System.out.println("Number of steps: " + time);
+                            return false;
+                        }
+                    }
+                    // assign to curRow the row value of the Cell
+                    curRow = cell.row;
+                    // assign to curCol the col value of the Cell
+                    curCol = cell.col;
+                    // assign to curValue the value of the Cell + 1
+                    curValue = cell.number + 1;
+                    // set the value of the board Cell at curRow, curCol to 0
+                    numbers[curRow][curCol] =  0;
+                } else {
+                    // print out the number of steps (time)
+                    // return false (no solution found)
+                    System.out.println("Number of steps: " + time);
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

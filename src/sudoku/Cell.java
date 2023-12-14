@@ -20,6 +20,7 @@ public class Cell extends JTextField{
     int row, col;
     int number;
     boolean status;
+    boolean islocked;
 
     //constructor
     public Cell(int row, int col){
@@ -27,6 +28,15 @@ public class Cell extends JTextField{
         this.row = row;
         this.col = col;
 
+        setDocument(new LimitInputCell(1));//Make cell has a limit length input
+        super.setHorizontalAlignment(JTextField.CENTER);
+        super.setFont(FONT_NUMBERS);
+    }
+    public Cell(int row, int col, int value){
+        super(); //JTextField
+        this.row = row;
+        this.col = col;
+        this.number = value;
         setDocument(new LimitInputCell(1));//Make cell has a limit length input
         super.setHorizontalAlignment(JTextField.CENTER);
         super.setFont(FONT_NUMBERS);
