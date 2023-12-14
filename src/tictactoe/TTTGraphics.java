@@ -9,6 +9,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JLabel;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  * Tic-Tac-Toe: Two-player Graphics version with Simple-OO in one class
@@ -28,7 +33,7 @@ public class TTTGraphics extends JFrame {
     public static final int CELL_PADDING = CELL_SIZE / 5;
     public static final int SYMBOL_SIZE = CELL_SIZE - CELL_PADDING * 2; // width/height
     public static final int SYMBOL_STROKE_WIDTH = 8; // pen's stroke width
-    public static final Color COLOR_BG = new Color(197, 49, 49);  // background
+    public static final Color COLOR_BG = new Color(199, 255, 170);  // background
     public static final Color COLOR_BG_STATUS = new Color(216, 216, 216);
     public static final Color COLOR_GRID   = new Color(34, 152, 23);  // grid lines
 //    public static final Color COLOR_CROSS  = new Color(211, 45, 65);  // Red #D32D41
@@ -55,6 +60,31 @@ public class TTTGraphics extends JFrame {
     private GamePanel gamePanel; // Drawing canvas (JPanel) for the game board
     private JLabel statusBar;  // Status Bar
     private ImageIcon logo;
+    //panggil musik
+    private Clip backgroundMusic;
+
+    private void playBackgroundMusic() {
+        try {
+            // Mendapatkan aliran audio dari file musik
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("Childhood – Tomh. (No Copyright Music).wav").getAbsoluteFile());
+            backgroundMusic = AudioSystem.getClip();
+
+            // Membuka aliran audio dan memainkan musik secara terus menerus
+            backgroundMusic.open(audioInputStream);
+            backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void stopBackgroundMusic() {
+        if (backgroundMusic != null && backgroundMusic.isRunning()) {
+            backgroundMusic.stop();
+        }
+    }
+
+
+
 
     /** Constructor to setup the game and the GUI components */
     public TTTGraphics() {
@@ -62,6 +92,10 @@ public class TTTGraphics extends JFrame {
         initGame();
         logo = new ImageIcon("Assets/logo.png");
         setIconImage(logo.getImage());
+
+        // Play background music
+        playBackgroundMusic();
+
         // Set up GUI components
         gamePanel = new GamePanel();  // Construct a drawing canvas (a JPanel)
         gamePanel.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
@@ -140,6 +174,11 @@ public class TTTGraphics extends JFrame {
         }
         currentPlayer = Seed.CROSS;    // cross plays first
         currentState  = State.PLAYING; // ready to play
+
+        // Stop background music when starting a new game
+        stopBackgroundMusic();
+        // Play background music for the new game
+        playBackgroundMusic();
     }
 
     /**
