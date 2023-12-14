@@ -6,15 +6,15 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
+
 
 import javax.imageio.ImageIO;
 
 public class StartMenu extends JFrame {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 
-        JFrame frame = new JFrame("Start Menu");
+        JFrame frame = new JFrame("Tictactoe and Sudoku 8");
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -91,6 +91,9 @@ public class StartMenu extends JFrame {
             }
         });
 
+        LoopSound loopSound = new LoopSound("Assets/lagu game.wav");
+        loopSound.play();
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - frame.getWidth()) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - frame.getHeight()) / 2);
 
@@ -104,3 +107,4 @@ public class StartMenu extends JFrame {
         frame.setVisible(true);
     }
 }
+

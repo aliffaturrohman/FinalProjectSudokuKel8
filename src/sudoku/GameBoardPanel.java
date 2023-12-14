@@ -176,6 +176,7 @@ private class CellInputListener implements ActionListener {
 
 }
 public void solve(){
+        stopwatchLabel.stopTimer();
     for (int row = 0; row < GRID_SIZE; ++row) {
         for (int col = 0; col < GRID_SIZE; ++col) {
             cells[row][col].newGame(puzzle.numbers[row][col], true);
