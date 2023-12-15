@@ -9,11 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JLabel;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  * Tic-Tac-Toe: Two-player Graphics version with Simple-OO in one class
@@ -147,7 +142,7 @@ public class TTTGraphics extends JFrame {
         }
         currentPlayer = Seed.CROSS;    // cross plays first
         currentState  = State.PLAYING; // ready to play
-        
+
     }
 
     /**
