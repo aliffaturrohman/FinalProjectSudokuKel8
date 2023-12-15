@@ -31,7 +31,7 @@ public class TTTGraphics extends JFrame {
     public static final Color COLOR_BG = new Color(199, 255, 170);  // background
     public static final Color COLOR_BG_STATUS = new Color(216, 216, 216);
     public static final Color COLOR_GRID   = new Color(34, 152, 23);  // grid lines
-//    public static final Color COLOR_CROSS  = new Color(211, 45, 65);  // Red #D32D41
+    //    public static final Color COLOR_CROSS  = new Color(211, 45, 65);  // Red #D32D41
 //    public static final Color COLOR_NOUGHT = new Color(76, 181, 245); // Blue #4CB5F5
     public static final Font FONT_STATUS = new Font("OCR A Extended", Font.PLAIN, 14);
 
@@ -197,7 +197,7 @@ public class TTTGraphics extends JFrame {
         @Override
         public void paintComponent(Graphics g) {  // Callback via repaint()
             super.paintComponent(g);
-           setBackground(COLOR_BG);  // set its background color
+            setBackground(COLOR_BG);  // set its background color
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             Image X_IMAGE = toolkit.getImage(X_IMAGE_URL);
             Image O_IMAGE = toolkit.getImage(O_IMAGE_URL);
@@ -216,6 +216,7 @@ public class TTTGraphics extends JFrame {
             int starty = (getHeight() - BOARD_HEIGHT) / 2;
 
             g.drawImage(scaledBgImage, startx, starty, BOARD_WIDTH, BOARD_HEIGHT, null);
+
 
 
             // Draw the grid lines
@@ -243,8 +244,8 @@ public class TTTGraphics extends JFrame {
 
             for (int row = 0; row < ROWS; ++row) {
                 for (int col = 0; col < COLS; ++col) {
-                    int x1 = col * CELL_SIZE + CELL_PADDING;
-                    int y1 = row * CELL_SIZE + CELL_PADDING;
+                    int x1 = startx + col * CELL_SIZE + CELL_PADDING;
+                    int y1 = starty + row * CELL_SIZE + CELL_PADDING;
 
                     // Calculate the center position of the cell
                     int centerX = x1 + SYMBOL_SIZE / 2;
