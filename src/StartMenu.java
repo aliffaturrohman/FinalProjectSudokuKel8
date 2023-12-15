@@ -1,3 +1,12 @@
+/**
+ * ES234317-Algorithm and Data Structures
+ * Semester Ganjil, 2023/2024
+ * Group Capstone Project
+ * Group #8
+ * 1 - 5026221040 - Alif Faturrohman
+ * 2 - 5026221104- Muhamad Arif Satriyo
+ * 3 - 5026221132 - Zikrul Khalis
+ */
 import sudoku.SudokuMain;
 import tictactoe.TTTGraphics;
 
@@ -14,7 +23,7 @@ public class StartMenu extends JFrame {
 
     public static void main(String[] args) throws Exception {
 
-        JFrame frame = new JFrame("Sudoku and Tictactoe");
+        JFrame frame = new JFrame("Sudoku and Tictactoe Kelompok 8");
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -51,6 +60,11 @@ public class StartMenu extends JFrame {
         logoImage.setIcon(logo);
         logoImage.setHorizontalAlignment(JLabel.CENTER);
 
+        JLabel textCopyright = new JLabel("Dibuat oleh Kelompok 8: Alif Faturrohman(5026221040), Muhamad Arif Satriyo(5026221104), Zikrul Khalis(5026221132)");
+        textCopyright.setFont(new Font("Arial", Font.PLAIN, 20));
+        textCopyright.setForeground(Color.WHITE);
+        textCopyright.setBackground(Color.DARK_GRAY);
+        textCopyright.setOpaque(true);
 
         exitButton.setBackground(new Color(220,53,69));
         exitButton.setFont(new Font("Arial",Font.PLAIN,20));
@@ -73,6 +87,7 @@ public class StartMenu extends JFrame {
         frame.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
                 Dimension size = frame.getSize();
+                Dimension textCopyrightSize = textCopyright.getPreferredSize();
                 int width = (int) size.getWidth();
                 int height = (int) size.getHeight();
 
@@ -81,6 +96,7 @@ public class StartMenu extends JFrame {
                 ticTacToeButton.setBounds((width / 4) - (buttonWidth / 2), (height * 3 / 4) - (buttonHeight / 2), buttonWidth, buttonHeight);
                 logoImage.setBounds((width / 2) - (logo.getIconWidth() / 2), 10, logo.getIconWidth(), logo.getIconHeight());
                 exitButton.setBounds(width / 8 - (exitButtonWidth /2 ), (height / 8) - (exitButtonHeight /2 ), exitButtonWidth,exitButtonHeight);
+                textCopyright.setBounds((width - textCopyrightSize.width ) / 2, height * 7 /8, textCopyrightSize.width, textCopyrightSize.height);
             }
         });
 
@@ -97,6 +113,7 @@ public class StartMenu extends JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - frame.getWidth()) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - frame.getHeight()) / 2);
 
+        frame.add(textCopyright);
         frame.add(exitButton);
         frame.add(logoImage);
         frame.add(sudokuButton);
