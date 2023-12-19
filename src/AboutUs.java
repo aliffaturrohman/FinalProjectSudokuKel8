@@ -35,10 +35,11 @@ public class AboutUs {
         name.add(developer1Label);
 
         JFrame frame = new JFrame("About Us");
+        frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 700);
+        frame.setSize(1000, 650);
         frame.add(photo);
-        frame.add(name);
+        frame.add(name,BorderLayout.SOUTH);
         frame.setVisible(true);
 
     }
