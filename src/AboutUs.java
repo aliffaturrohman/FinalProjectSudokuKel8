@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class AboutUs extends JFrame {
+public class AboutUs {
     private static final long serialVersionUID = 1L;
 
     public AboutUs() throws IOException {
@@ -34,12 +34,12 @@ public class AboutUs extends JFrame {
         name.add(developer2Label);
         name.add(developer1Label);
 
-        add(photo);
-        add(name);
+        JFrame frame = new JFrame("About Us");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1000, 700);
+        frame.add(photo);
+        frame.add(name);
+        frame.setVisible(true);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 700);
-        setContentPane(new AboutUs());
-        setVisible(true);
     }
 }
