@@ -1,24 +1,26 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-public class AboutUs extends JPanel {
+public class AboutUs extends JFrame {
     private static final long serialVersionUID = 1L;
 
-    public AboutUs() {
-        setLayout(new BorderLayout());
+    public AboutUs() throws IOException {
+        JPanel name = new JPanel();
 
         // Create JLabels for each developer
-        JLabel developer1Label = new JLabel("Muhammad Arif Satriyo\n (5026221138)");
+        JLabel developer1Label = new JLabel("Muhamad Arif S\n (5026221104)");
         JLabel developer2Label = new JLabel("Alif faturrohman\n (50262211040)");
         JLabel developer3Label = new JLabel("Zikrul Khalis\n (5026221132)");
 
         // Load and set images for each developer
-        ImageIcon developer1Image = new ImageIcon("Assets/harimau.png"); // Replace with actual file name
-        ImageIcon developer2Image = new ImageIcon("Assets/harimau.png"); // Replace with actual file name
-        ImageIcon developer3Image = new ImageIcon("Assets/harimau.png"); // Replace with actual file name
-        JLabel developer1Photo = new JLabel(developer1Image);
-        JLabel developer2Photo = new JLabel(developer2Image);
-        JLabel developer3Photo = new JLabel(developer3Image);
+        BufferedImage developerPhoto = ImageIO.read(new File("Assets/Devphoto.jpg"));
+        Image scaledDevphoto = developerPhoto.getScaledInstance(1000, 600, Image.SCALE_SMOOTH);
+        ImageIcon Devphoto = new ImageIcon(scaledDevphoto);
+        JLabel photo = new JLabel(Devphoto);
 
         // Set font for developer names
         Font developerFont = new Font("Arial", Font.BOLD, 16);
@@ -26,24 +28,18 @@ public class AboutUs extends JPanel {
         developer2Label.setFont(developerFont);
         developer3Label.setFont(developerFont);
 
-        // Set layout for the panel
-        setLayout(new GridLayout(3, 1, 10, 10));
-
         // Add components to the panel
-        add(developer1Label);
-        add(developer1Photo);
-        add(developer2Label);
-        add(developer2Photo);
-        add(developer3Label);
-        add(developer3Photo);
-    }
+        name.setLayout(new FlowLayout(FlowLayout.CENTER,20,10));
+        name.add(developer3Label);
+        name.add(developer2Label);
+        name.add(developer1Label);
 
-    public static void main(String[] args) {
-        // Test the AboutUsPanel
-        JFrame frame = new JFrame("About Us");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 600);
-        frame.setContentPane(new AboutUs());
-        frame.setVisible(true);
+        add(photo);
+        add(name);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1000, 700);
+        setContentPane(new AboutUs());
+        setVisible(true);
     }
 }

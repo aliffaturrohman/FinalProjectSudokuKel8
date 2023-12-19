@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 
 import javax.imageio.ImageIO;
@@ -33,6 +34,8 @@ public class StartMenu extends JFrame {
         int buttonWidth = 300;
         int exitButtonHeight = 50;
         int exitButtonWidth = 50;
+        int aboutusHeight = 50;
+        int aboutusWidth = 150;
 
         ImageIcon logo = new ImageIcon("Assets/logo.png");
 
@@ -60,11 +63,12 @@ public class StartMenu extends JFrame {
         logoImage.setIcon(logo);
         logoImage.setHorizontalAlignment(JLabel.CENTER);
 
-        JLabel textCopyright = new JLabel("Dibuat oleh Kelompok 8: Alif Faturrohman(5026221040), Muhamad Arif Satriyo(5026221104), Zikrul Khalis(5026221132)");
-        textCopyright.setFont(new Font("Arial", Font.PLAIN, 20));
-        textCopyright.setForeground(Color.WHITE);
-        textCopyright.setBackground(Color.DARK_GRAY);
-        textCopyright.setOpaque(true);
+        JButton aboutbutton = new JButton("About Us");
+
+        aboutbutton.setBackground(Color.blue);
+        aboutbutton.setForeground(Color.white);
+        aboutbutton.setFont(new Font("Arial",Font.PLAIN,15));
+        aboutbutton.setBorderPainted(false);
 
         exitButton.setBackground(new Color(220,53,69));
         exitButton.setFont(new Font("Arial",Font.PLAIN,20));
@@ -83,11 +87,23 @@ public class StartMenu extends JFrame {
                 SwingUtilities.invokeLater(() -> new TTTGraphics());
             }
         });
+        aboutbutton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                SwingUtilities.invokeLater(() -> {
+                    try {
+                        new AboutUs();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+            }
+        });
+
 
         frame.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
                 Dimension size = frame.getSize();
-                Dimension textCopyrightSize = textCopyright.getPreferredSize();
                 int width = (int) size.getWidth();
                 int height = (int) size.getHeight();
 
@@ -96,7 +112,7 @@ public class StartMenu extends JFrame {
                 ticTacToeButton.setBounds((width / 4) - (buttonWidth / 2), (height * 3 / 4) - (buttonHeight / 2), buttonWidth, buttonHeight);
                 logoImage.setBounds((width / 2) - (logo.getIconWidth() / 2), 10, logo.getIconWidth(), logo.getIconHeight());
                 exitButton.setBounds(width / 8 - (exitButtonWidth /2 ), (height / 8) - (exitButtonHeight /2 ), exitButtonWidth,exitButtonHeight);
-                textCopyright.setBounds((width - textCopyrightSize.width ) / 2, height * 7 /8, textCopyrightSize.width, textCopyrightSize.height);
+                aboutbutton.setBounds(width - 200, (height / 8) - aboutusHeight, aboutusWidth,aboutusHeight);
             }
         });
 
@@ -113,12 +129,13 @@ public class StartMenu extends JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - frame.getWidth()) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - frame.getHeight()) / 2);
 
-        frame.add(textCopyright);
+//        frame.add(textCopyright);
         frame.add(exitButton);
         frame.add(logoImage);
         frame.add(sudokuButton);
         frame.add(ticTacToeButton);
         frame.add(background);
+        frame.add(aboutbutton);
 
         frame.setLayout(null);
         frame.setVisible(true);
