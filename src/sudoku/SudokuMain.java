@@ -48,7 +48,7 @@ public class SudokuMain {
 
         bgLabel.setBounds(0,0,screenWidth,screenHeight);
         container.setOpaque(false);
-        container.setBounds(screenWidth/2-300,20,600,650);
+        container.setBounds(screenWidth/2-400,20,800,700);
         frame.add(container);
         frame.add(bgLabel);
         frame.setIconImage(logo.getImage());
